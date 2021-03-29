@@ -7,7 +7,8 @@ import {
     faSearch,
     faBatteryThreeQuarters,
     faPowerOff,
-    faPaperPlane
+    faPaperPlane,
+    faCog
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faWindowMinimize,
@@ -31,6 +32,7 @@ library.add(
     faBatteryThreeQuarters,
     faPowerOff,
     faPaperPlane,
+    faCog,
     faWindowMinimize,
     faWindowMaximize,
     faWindowRestore,
