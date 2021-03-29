@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <div>
-
+    <div class="window">
+        <div class="title-bar">
+            {{ title }}
         </div>
         <div>
 
@@ -13,11 +13,29 @@
 export default {
     name: "Window",
     props: {
-
+        title: String,
+        isMaximized: Boolean
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.window {
+    
+}
+.title-bar {
 
+}
+.minimize-btn {
+
+}
+.maximize-btn {
+
+}
+.restore-btn {
+
+}
+.close-btn {
+
+}
 </style>
