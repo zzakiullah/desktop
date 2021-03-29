@@ -1,4 +1,7 @@
 # zulaikha
+
+[![Dependencies](https://david-dm.org/zzakiullah/zulaikha.svg)](https://david-dm.org/zzakiullah/zulaikha)
+
 Trying something out with Vue.js
 
 ```
