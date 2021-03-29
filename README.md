@@ -1,7 +1,6 @@
 # zulaikha
 
 [![Node.js](https://github.com/zzakiullah/zulaikha/actions/workflows/node.js.yml/badge.svg)](https://github.com/zzakiullah/zulaikha/actions/workflows/node.js.yml)
-
 [![Dependencies](https://david-dm.org/zzakiullah/zulaikha.svg)](https://david-dm.org/zzakiullah/zulaikha)
 
 Trying something out with Vue.js
