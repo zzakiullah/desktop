@@ -4,6 +4,8 @@
 
 Trying something out with Vue.js
 
+Hosted on https://zulaikha.herokuapp.com
+
 ```
 # Project setup
 npm install
