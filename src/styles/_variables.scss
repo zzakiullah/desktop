@@ -2,14 +2,33 @@
  *
  */
 
-// Grid breakpoints
-$smBreakpoint: 576px;
-$mdBreakpoint: 768px;
-$lgBreakpoint: 992px;
-$xlBreakpoint: 1200px;
-
 // Colours
-$bgColor: #ffffff;
-$textColor: #000000;
+//$TEXT: #3a3a3a;
+//$FONT: 'Avenir', serif;
 
-$folderColor: #b0a8f5;
+//$bgColor: #ffffff;
+//$textColor: #000000;
+
+//$folderColor: #b0a8f5;
+
+/*$PRIMARY: (
+    TEAL: #23B5AF,
+    AQUA: #A9DED9,
+    PINK: #EC9D89,
+    YELLOW: #EDBA4B
+);
+
+$SECONDARY: (
+    NAVY: #0E1355,
+    LIGHT_BLUE: #88D2EE,
+    SAND: #FAE0A1,
+    MAGENTA: #8B3763
+);*/
+
+// Media screen sizes
+$MEDIA: (
+    SM: 576px,
+    MD: 768px,
+    LG: 992px,
+    XL: 1200px
+);

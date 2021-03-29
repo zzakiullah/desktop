@@ -2,6 +2,8 @@
  *
  */
 
+@import 'variables';
+
 @mixin clearfix() {
     &:after {
         content: '';
@@ -82,4 +84,10 @@
 
 @mixin box-sizing($box-sizing: border-box) {
     @include prefix('box-sizing', #{$box-sizing});
+}
+
+@mixin media($size) {
+    @media only screen and (min-width: #{map-get($MEDIA, $size)}) {
+        @content;
+    }
 }

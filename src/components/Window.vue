@@ -12,6 +12,11 @@
 <script>
 export default {
     name: "Window",
+    data: function () {
+        return {
+
+        }
+    },
     props: {
         title: String,
         isMaximized: Boolean
@@ -20,22 +25,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@styles/_mixins.scss';
+@import '~@styles/_variables.scss';
+
 .window {
-    
-}
-.title-bar {
 
-}
-.minimize-btn {
+    &__title-bar {
 
-}
-.maximize-btn {
+    }
 
-}
-.restore-btn {
+    &__content {
 
-}
-.close-btn {
+    }
 
+    &__minimize-btn {
+
+    }
+
+    &__maximize-btn {
+
+    }
+
+    &__restore-btn {
+
+    }
+
+    &__close-btn {
+
+    }
 }
 </style>
