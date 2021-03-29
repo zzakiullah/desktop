@@ -3,32 +3,13 @@
  */
 
 // Colours
-//$TEXT: #3a3a3a;
-//$FONT: 'Avenir', serif;
+$TEXT: #000000;
+$FONT: 'Avenir', serif;
 
-//$bgColor: #ffffff;
-//$textColor: #000000;
-
-//$folderColor: #b0a8f5;
-
-/*$PRIMARY: (
-    TEAL: #23B5AF,
-    AQUA: #A9DED9,
-    PINK: #EC9D89,
-    YELLOW: #EDBA4B
-);
-
-$SECONDARY: (
-    NAVY: #0E1355,
-    LIGHT_BLUE: #88D2EE,
-    SAND: #FAE0A1,
-    MAGENTA: #8B3763
-);*/
+$BLUE_PURPLE: #b0a8f5;
 
 // Media screen sizes
-$MEDIA: (
-    SM: 576px,
-    MD: 768px,
-    LG: 992px,
-    XL: 1200px
-);
+$SM_SCREEN: 576px;
+$MD_SCREEN: 768px;
+$LG_SCREEN: 992px;
+$XL_SCREEN: 1200p;

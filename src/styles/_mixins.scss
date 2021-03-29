@@ -87,7 +87,7 @@
 }
 
 @mixin media($size) {
-    @media only screen and (min-width: #{map-get($MEDIA, $size)}) {
+    @media only screen and (min-width: $size) {
         @content;
     }
 }
