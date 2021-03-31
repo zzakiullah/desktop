@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <Window title="about" iconName="folder" iconType="fas" />
+    <Window title="about" iconName="folder" iconType="fas">
+      Hello there
+    </Window>
   </div>
 </template>
 
@@ -15,7 +17,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './styles/index.scss';
+
 #app {
   position: relative;
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -23,5 +27,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 </style>
