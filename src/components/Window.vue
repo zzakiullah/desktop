@@ -86,16 +86,18 @@ export default {
             }
         },
         doDragOrResize: function() {
-            var mouseX = event.clientX,
-                mouseY = event.clientY;
+            var mouseX = (event.clientX < 0) ? 0 : ((event.clientX > window.innerWidth) ? window.innerWidth : event.clientX),
+                mouseY = (event.clientY < 0) ? 0 : ((event.clientY > window.innerHeight) ? window.innerHeight : event.clientY);
             if (this.dragging) {
                 this.left = event.clientX - this.offsetX;
                 this.top = event.clientY - this.offsetY;
+                this.left = (this.left < 0) ? 0 : ((this.left + this.width > window.innerWidth) ? (window.innerWidth - this.width) : this.left);
+                this.top = (this.top < 0) ? 0 : ((this.top + this.height > window.innerHeight) ? (window.innerHeight - this.height) : this.top);
             } else if (this.resizing) {
                 switch (this.resizeType) {
                     case "ne-resize":
                         this.width = mouseX - this.left;
-                        this.height +=  this.top - mouseY;
+                        this.height += this.top - mouseY;
                         this.top = mouseY;
                         break;
                     case "nw-resize":
