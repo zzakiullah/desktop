@@ -3,8 +3,7 @@
          v-bind:style="{ top: top + 'px', left: left + 'px' }">
         <div class="window__title-bar"
              v-bind:class="{ grabbed: dragging }"
-             v-on:mousedown="startDrag()"
-             v-on:mouseup="stopDrag()"><!--v-on:mousemove="setOffset()"-->
+             v-on:mousedown="startDrag()">
             <div class="window__icon">
                 <font-awesome-icon :icon="[this.iconType, this.iconName]" />
             </div>
@@ -78,17 +77,15 @@ export default {
                 this.left = event.clientX - this.offsetX;
                 this.top = event.clientY - this.offsetY;
             }
-        },
-        setOffset: function() {
-            if (!this.dragging) {
-                this.offsetX = event.clientX - this.left;
-                this.offsetY = event.clientY - this.top;
-            }
         }
     },
     mounted: function() {
-        window.addEventListener('mousemove', this.doDrag());
-        window.addEventListener('mouseup', this.stopDrag());
+        window.addEventListener('mousemove', function() {
+            this.doDrag();
+        }.bind(this));
+        window.addEventListener('mouseup', function() {
+            this.stopDrag();
+        }.bind(this));
     },
     props: {
         title: String,
