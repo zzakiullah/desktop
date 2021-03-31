@@ -9,7 +9,11 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.14.4",
+    "@fortawesome/free-solid-svg-icons": "^6.14.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-brands-svg-icons": "^6.14.4",
+    "@fortawesome/vue-fontawesome": "^6.14.4",
     "core-js": "^3.6.5",
     "express": "^4.17.1",
     "serve-static": "^1.14.1",
