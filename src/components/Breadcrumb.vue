@@ -1,12 +1,12 @@
 <template>
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ul class="breadcrumb">
             <li class="breadcrumb__item" v-for="item in items" :key="item.title">
-                <a class="breadcrumb__link">
-
+                <a class="breadcrumb__link" :href="item.link">
+                    {{ item.title }}
                 </a>
             </li>
-        </ol>
+        </ul>
     </nav>
 </template>
 
@@ -22,8 +22,7 @@ export default {
 
     },
     props: {
-        items: Array,
-        separator: String
+        items: Array
     }
 }
 </script>
@@ -33,9 +32,29 @@ export default {
 @import '../styles/_variables.scss';
 
 .breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: #eeeeee;
 
     &__item {
+        display: inline;
+        font-size: 18px;
 
+        &+.breadcrumb__item:before {
+            padding: 8px;
+            color: black;
+            content: "/";
+        }
+    }
+
+    &__link {
+        color: #0275d8;
+        text-decoration: none;
+
+        &:hover {
+            color: #01447e;
+            text-decoration: none;
+        }
     }
 }
 

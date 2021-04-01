@@ -1,14 +1,10 @@
 <template>
-    <nav aria-label="taskbar">
-        <ul class="taskbar">
-
-        </ul>
-    </nav>
+    
 </template>
 
 <script>
 export default {
-    name: "Taskbar",
+    name: "GridLayout",
     data: function() {
         return {
 
@@ -27,8 +23,8 @@ export default {
 @import '../styles/_mixins.scss';
 @import '../styles/_variables.scss';
 
-.taskbar {
-    width: 100%;
+.grid {
+    
 }
 
 @include media($SM_SCREEN) {

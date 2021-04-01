@@ -1,5 +1,6 @@
 <template>
     <div class="window"
+         :class="(closed ? 'closed' : 'open') + ((dragging || resizing) ? ' drag-resize' : '')"
          :style="{ top: top + 'px', left: left + 'px',
                          width: width + 'px', height: height + 'px',
                          padding: padding + 'px', cursor: (dragging ? 'grabbing' : resizeType) }"
@@ -44,8 +45,12 @@ export default {
         return {
             top: 0,
             left: 0,
+            restoreTop: 0,
+            restoreLeft: 0,
             width: 550,
             height: 550,
+            restoreWidth: 550,
+            restoreHeight: 550,
             padding: 5,
             offsetX: 0,
             offsetY: 0,
@@ -62,7 +67,25 @@ export default {
             this.minimized = true;
         },
         toggleMaximized: function() {
+            if (this.maximized) {
+                this.left = this.restoreLeft;
+                this.top = this.restoreTop;
+                this.width = this.restoreWidth;
+                this.height = this.restoreHeight;
+            } else {
+                this.restoreLeft = this.left;
+                this.restoreTop = this.top;
+                this.restoreWidth = this.width;
+                this.restoreHeight = this.height;
+                this.left = 0;
+                this.top = 0;
+                this.width = window.innerWidth;
+                this.height = window.innerHeight;
+            }
             this.maximized = !this.maximized;
+        },
+        open: function() {
+            this.closed = false;
         },
         close: function() {
             this.minimized = false;
@@ -188,9 +211,24 @@ $titleBarHeight: 25px;
 $btnOffset: 2px;
 
 .window {
+    display: inline-block;
     position: absolute;
     box-shadow: 0px 0px 10px 4px #cccccc;
-    border: 1px solid black;
+    transform: scale(0.95);
+    transition: 0.15s, transform 0.15s, left 0.3s, top 0.3s, width 0.3s, height 0.3s;
+
+    &.open {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    &.closed {
+        opacity: 0;
+    }
+
+    &.drag-resize {
+        transition: 0.15s, transform 0.15s, left 0s, top 0s, width 0s, height 0s;
+    }
 
     &__title-bar {
         display: flex;
