@@ -210,7 +210,7 @@ export default {
 
 $minimizeBtnColor: #dedede;
 $resizeBtnColor: #dedede;
-$closeBtnColor: #ff605c;
+$closeBtnColor: #e81123;
 
 $titleBarHeight: 25px;
 $btnOffset: 2px;
@@ -251,24 +251,31 @@ $maxRestoreTime: 0.35s;
     }
 
     &__icon {
+        font-size: 18px;
         user-select: none;
+        margin: 0 2px;
     }
 
     &__title {
+        font-size: 16px;
         flex-grow: 1;
         text-align: left;
         user-select: none;
+        margin: 0 2px;
     }
 
     &__btn {
         width: $titleBarHeight - $btnOffset;
         height: $titleBarHeight - $btnOffset;
+        margin: 0 2px;
+        border: none;
         border-radius: 50%;
         outline: none;
         cursor: pointer;
+        transition: background-color 0.35s;
 
-        &:focus, &:active {
-            outline: none;
+        &:hover {
+            transition: none;
         }
 
         &--minimize {
@@ -288,6 +295,7 @@ $maxRestoreTime: 0.35s;
         }
 
         &--close {
+            color: #ffffff;
             background-color: $closeBtnColor;
 
             &:hover {

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Window title="about" iconName="folder" iconType="fas">
+    <Window title="About" iconName="user-circle" iconType="fas">
       <Navigation :items="[{ title: 'Hello', link: '#' }, { title: 'Again', link: '#' }]" />
     </Window>
   </div>
