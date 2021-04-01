@@ -1,12 +1,12 @@
 <template>
     <div class="window"
-         v-bind:style="{ top: top + 'px', left: left + 'px',
+         :style="{ top: top + 'px', left: left + 'px',
                          width: width + 'px', height: height + 'px',
                          padding: padding + 'px', cursor: (dragging ? 'grabbing' : resizeType) }"
-         v-on:mousedown="startResize()">
+         @mousedown="startResize()">
         <div class="window__title-bar"
-             v-bind:style="{ cursor: (dragging ? 'grabbing' : (resizing ? resizeType : 'grab')) }"
-             v-on:mousedown="startDrag()">
+             :style="{ cursor: (dragging ? 'grabbing' : (resizing ? resizeType : 'grab')) }"
+             @mousedown="startDrag()">
             <div class="window__icon">
                 <font-awesome-icon :icon="[this.iconType, this.iconName]" />
             </div>
@@ -14,23 +14,23 @@
                 {{ title }}
             </div>
             <button class="window__btn window__btn--minimize"
-                    v-on:click="minimize()">
+                    @click="minimize()">
                 <font-awesome-icon :icon="['far', 'window-minimize']" />
             </button>
             <button class="window__btn window__btn--resize"
-                    v-on:click="toggleMaximized()">
+                    @click="toggleMaximized()">
                 <font-awesome-icon :icon="['far', 'window-maximize']"
-                                    v-bind:style="{ display: (maximized ? 'none' : 'inline-block') }" />
+                                   :style="{ display: (maximized ? 'none' : 'inline-block') }" />
                 <font-awesome-icon :icon="['far', 'window-restore']"
-                                    v-bind:style="{ display: (maximized ? 'inline-block' : 'none') }" />
+                                   :style="{ display: (maximized ? 'inline-block' : 'none') }" />
             </button>
             <button class="window__btn window__btn--close"
-                    v-on:click="close()">
+                    @click="close()">
                 <font-awesome-icon :icon="['fas', 'times']" />
             </button>
         </div>
         <div class="window__content"
-             v-bind:style="{ cursor: (dragging ? 'grabbing !important' : (resizing ? (resizeType + ' !important') : 'auto')),
+             :style="{ cursor: (dragging ? 'grabbing !important' : (resizing ? (resizeType + ' !important') : 'auto')),
                              userSelect: ((dragging || resizing) ? 'none !important' : 'auto') }">
             <slot></slot>
         </div>
@@ -40,7 +40,6 @@
 <script>
 export default {
     name: "Window",
-    components: {},
     data: function() {
         return {
             top: 0,
@@ -134,21 +133,21 @@ export default {
                     xInnerRight = this.left + this.width - this.padding,
                     yInnerTop = this.top + this.padding,
                     yInnerBottom = this.top + this.height - this.padding;
-                if (mouseX > xInnerRight && mouseY < yInnerTop) {
+                if (mouseX >= xInnerRight && mouseY <= yInnerTop) {
                     this.resizeType = "ne-resize";
-                } else if (mouseX < xInnerLeft && mouseY < yInnerTop) {
+                } else if (mouseX <= xInnerLeft && mouseY <= yInnerTop) {
                     this.resizeType = "nw-resize";
-                } else if (mouseX > xInnerRight && mouseY > yInnerBottom) {
+                } else if (mouseX >= xInnerRight && mouseY >= yInnerBottom) {
                     this.resizeType = "se-resize";
-                } else if (mouseX < xInnerLeft && mouseY > yInnerBottom) {
+                } else if (mouseX <= xInnerLeft && mouseY >= yInnerBottom) {
                     this.resizeType = "sw-resize";
-                } else if (mouseY < yInnerTop) {
+                } else if (mouseY <= yInnerTop) {
                     this.resizeType = "n-resize";
-                } else if (mouseY > yInnerBottom) {
+                } else if (mouseY >= yInnerBottom) {
                     this.resizeType = "s-resize";
-                } else if (mouseX > xInnerRight) {
+                } else if (mouseX >= xInnerRight) {
                     this.resizeType = "e-resize";
-                } else if (mouseX < xInnerLeft) {
+                } else if (mouseX <= xInnerLeft) {
                     this.resizeType = "w-resize";
                 } else {
                     this.resizeType = "auto";
