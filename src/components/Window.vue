@@ -1,12 +1,12 @@
 <template>
     <div class="window"
-         :class="(closed ? 'closed' : 'open') + ((dragging || resizing) ? ' drag-resize' : '')"
-         :style="{ top: top + 'px', left: left + 'px',
-                         width: width + 'px', height: height + 'px',
-                         padding: padding + 'px', cursor: (dragging ? 'grabbing' : resizeType) }"
+         :class="(closed ? 'closed' : 'open') + ((action == 'dragging' || action == 'resizing') ? ' drag-resize' : '')"
+         :style="{ left: position.current.x + 'px', top: position.current.y + 'px',
+                   width: size.current.w + 'px', height: size.current.h + 'px',
+                   padding: padding + 'px', cursor: ((action == 'dragging') ? 'grabbing' : resizeType) }"
          @mousedown="startResize()">
         <div class="window__title-bar"
-             :style="{ cursor: (dragging ? 'grabbing' : (resizing ? resizeType : 'grab')) }"
+             :style="{ cursor: ((action == 'dragging') ? 'grabbing' : ((action == 'resizing') ? resizeType : 'grab')) }"
              @mousedown="startDrag()">
             <div class="window__icon">
                 <font-awesome-icon :icon="[this.iconType, this.iconName]" />
@@ -31,8 +31,8 @@
             </button>
         </div>
         <div class="window__content"
-             :style="{ cursor: (dragging ? 'grabbing !important' : (resizing ? (resizeType + ' !important') : 'auto')),
-                             userSelect: ((dragging || resizing) ? 'none !important' : 'auto') }">
+             :style="{ cursor: ((action == 'dragging') ? 'grabbing !important' : ((action == 'resizing') ? (resizeType + ' !important') : 'auto')),
+                             userSelect: ((action == 'dragging' || action == 'resizing') ? 'none !important' : 'auto') }">
             <slot></slot>
         </div>
     </div>
@@ -43,22 +43,20 @@ export default {
     name: "Window",
     data: function() {
         return {
-            top: 0,
-            left: 0,
-            restoreTop: 0,
-            restoreLeft: 0,
-            width: 550,
-            height: 550,
-            restoreWidth: 550,
-            restoreHeight: 550,
+            position: {
+                current: { x: 0, y: 0 },
+                restore: { x: 0, y: 0 }
+            },
+            size: {
+                current: { w: 550, h: 550 },
+                restore: { w: 550, h: 550 }
+            },
+            offset: { x: 0, y: 0 },
             padding: 5,
-            offsetX: 0,
-            offsetY: 0,
             minimized: false,
             maximized: false,
             closed: false,
-            dragging: false,
-            resizing: false,
+            action: "none",
             resizeType: "auto"
         }
     },
@@ -68,118 +66,125 @@ export default {
         },
         toggleMaximized: function() {
             if (this.maximized) {
-                this.left = this.restoreLeft;
-                this.top = this.restoreTop;
-                this.width = this.restoreWidth;
-                this.height = this.restoreHeight;
+                this.position.current.x = this.position.restore.x;
+                this.position.current.y = this.position.restore.y;
+                this.size.current.w = this.size.restore.w;
+                this.size.current.h = this.size.restore.h;
             } else {
-                this.restoreLeft = this.left;
-                this.restoreTop = this.top;
-                this.restoreWidth = this.width;
-                this.restoreHeight = this.height;
-                this.left = 0;
-                this.top = 0;
-                this.width = window.innerWidth;
-                this.height = window.innerHeight;
+                this.position.restore.x = this.position.current.x;
+                this.position.restore.y = this.position.current.y;
+                this.size.restore.w = this.size.current.w;
+                this.size.restore.h = this.size.current.h;
+                this.position.current.x = 0;
+                this.position.current.y = 0;
+                this.size.current.w = window.innerWidth;
+                this.size.current.h = window.innerHeight;
             }
             this.maximized = !this.maximized;
         },
         open: function() {
+            this.$el.style.display = "inline-block";
             this.closed = false;
         },
         close: function() {
             this.minimized = false;
             this.closed = true;
-            this.dragging = false;
-            this.resizing = false;
+            this.action = "none"
+            setTimeout(function() {
+                this.$el.style.display = "none";
+            }.bind(this), 150);
         },
         startDrag: function() {
-            this.dragging = true;
+            this.action = "dragging";
             document.body.style.cursor = "grabbing";
-            this.offsetX = event.clientX - this.left;
-            this.offsetY = event.clientY - this.top;
+            this.offset.x = event.clientX - this.position.current.x;
+            this.offset.y = event.clientY - this.position.current.y;
         },
         startResize: function() {
             if (this.resizeType != "auto") {
-                this.resizing = true;
+                this.action = "resizing";
                 document.body.style.cursor = this.resizeType;
-                this.offsetX = event.clientX - this.left;
-                this.offsetY = event.clientY - this.top;
+                this.offset.x = event.clientX - this.position.current.x;
+                this.offset.y = event.clientY - this.position.current.y;
             }
         },
         doDragOrResize: function() {
             var mouseX = (event.clientX < 0) ? 0 : ((event.clientX > window.innerWidth) ? window.innerWidth : event.clientX),
                 mouseY = (event.clientY < 0) ? 0 : ((event.clientY > window.innerHeight) ? window.innerHeight : event.clientY);
-            if (this.dragging) {
-                this.left = event.clientX - this.offsetX;
-                this.top = event.clientY - this.offsetY;
-                this.left = (this.left < 0) ? 0 : ((this.left + this.width > window.innerWidth) ? (window.innerWidth - this.width) : this.left);
-                this.top = (this.top < 0) ? 0 : ((this.top + this.height > window.innerHeight) ? (window.innerHeight - this.height) : this.top);
-            } else if (this.resizing) {
-                switch (this.resizeType) {
-                    case "ne-resize":
-                        this.width = mouseX - this.left;
-                        this.height += this.top - mouseY;
-                        this.top = mouseY;
-                        break;
-                    case "nw-resize":
-                        this.width += this.left - mouseX;
-                        this.height +=  this.top - mouseY;
-                        this.left = mouseX;
-                        this.top = mouseY;
-                        break;
-                    case "se-resize":
-                        this.width = mouseX - this.left;
-                        this.height = mouseY - this.top;
-                        break;
-                    case "sw-resize":
-                        this.width += this.left - mouseX;
-                        this.height = mouseY - this.top;
-                        this.left = mouseX;
-                        break;
-                    case "n-resize":
-                        this.height +=  this.top - mouseY;
-                        this.top = mouseY;
-                        break;
-                    case "s-resize":
-                        this.height = mouseY - this.top;
-                        break;
-                    case "e-resize":
-                        this.width = mouseX - this.left;
-                        break;
-                    case "w-resize":
-                        this.width += this.left - mouseX;
-                        this.left = mouseX;
-                }
-            } else {
-                var xInnerLeft = this.left + this.padding,
-                    xInnerRight = this.left + this.width - this.padding,
-                    yInnerTop = this.top + this.padding,
-                    yInnerBottom = this.top + this.height - this.padding;
-                if (mouseX >= xInnerRight && mouseY <= yInnerTop) {
-                    this.resizeType = "ne-resize";
-                } else if (mouseX <= xInnerLeft && mouseY <= yInnerTop) {
-                    this.resizeType = "nw-resize";
-                } else if (mouseX >= xInnerRight && mouseY >= yInnerBottom) {
-                    this.resizeType = "se-resize";
-                } else if (mouseX <= xInnerLeft && mouseY >= yInnerBottom) {
-                    this.resizeType = "sw-resize";
-                } else if (mouseY <= yInnerTop) {
-                    this.resizeType = "n-resize";
-                } else if (mouseY >= yInnerBottom) {
-                    this.resizeType = "s-resize";
-                } else if (mouseX >= xInnerRight) {
-                    this.resizeType = "e-resize";
-                } else if (mouseX <= xInnerLeft) {
-                    this.resizeType = "w-resize";
-                } else {
-                    this.resizeType = "auto";
-                }
+            switch (this.action) {
+                case "dragging":
+                    var x = event.clientX - this.offset.x,
+                        y = event.clientY - this.offset.y,
+                        w = this.size.current.w,
+                        h = this.size.current.h;
+                    this.position.current.x = (x < 0) ? 0 : ((x + w > window.innerWidth) ? (window.innerWidth - w) : x);
+                    this.position.current.y = (y < 0) ? 0 : ((y + h > window.innerHeight) ? (window.innerHeight - h) : y);
+                    break;
+                case "resizing":
+                    switch (this.resizeType) {
+                        case "ne-resize":
+                            this.size.current.w = mouseX - this.position.current.x;
+                            this.size.current.h += this.position.current.y - mouseY;
+                            this.position.current.y = mouseY;
+                            break;
+                        case "nw-resize":
+                            this.size.current.w += this.position.current.x - mouseX;
+                            this.size.current.h +=  this.position.current.y - mouseY;
+                            this.position.current.x = mouseX;
+                            this.position.current.y = mouseY;
+                            break;
+                        case "se-resize":
+                            this.size.current.w = mouseX - this.position.current.x;
+                            this.size.current.h = mouseY - this.position.current.y;
+                            break;
+                        case "sw-resize":
+                            this.size.current.w += this.position.current.x - mouseX;
+                            this.size.current.h = mouseY - this.position.current.y;
+                            this.position.current.x = mouseX;
+                            break;
+                        case "n-resize":
+                            this.size.current.h +=  this.position.current.y - mouseY;
+                            this.position.current.y = mouseY;
+                            break;
+                        case "s-resize":
+                            this.size.current.h = mouseY - this.position.current.y;
+                            break;
+                        case "e-resize":
+                            this.size.current.w = mouseX - this.position.current.x;
+                            break;
+                        case "w-resize":
+                            this.size.current.w += this.position.current.x - mouseX;
+                            this.position.current.x = mouseX;
+                    }
+                    break;
+                default:
+                    var xInnerLeft = this.position.current.x + this.padding,
+                    xInnerRight = this.position.current.x + this.size.current.w - this.padding,
+                    yInnerTop = this.position.current.y + this.padding,
+                    yInnerBottom = this.position.current.y + this.size.current.h - this.padding;
+                    if (mouseX >= xInnerRight && mouseY <= yInnerTop) {
+                        this.resizeType = "ne-resize";
+                    } else if (mouseX <= xInnerLeft && mouseY <= yInnerTop) {
+                        this.resizeType = "nw-resize";
+                    } else if (mouseX >= xInnerRight && mouseY >= yInnerBottom) {
+                        this.resizeType = "se-resize";
+                    } else if (mouseX <= xInnerLeft && mouseY >= yInnerBottom) {
+                        this.resizeType = "sw-resize";
+                    } else if (mouseY <= yInnerTop) {
+                        this.resizeType = "n-resize";
+                    } else if (mouseY >= yInnerBottom) {
+                        this.resizeType = "s-resize";
+                    } else if (mouseX >= xInnerRight) {
+                        this.resizeType = "e-resize";
+                    } else if (mouseX <= xInnerLeft) {
+                        this.resizeType = "w-resize";
+                    } else {
+                        this.resizeType = "auto";
+                    }
             }
         },
         stopDragAndResize: function() {
-            this.dragging = false;
-            this.resizing = false;
+            this.action = "none";
             document.body.style.cursor = "auto";
         }
     },
@@ -210,12 +215,17 @@ $closeBtnColor: #ff605c;
 $titleBarHeight: 25px;
 $btnOffset: 2px;
 
+$openCloseTime: 0.15s;
+$maxRestoreTime: 0.35s;
+
 .window {
     display: inline-block;
     position: absolute;
     box-shadow: 0px 0px 10px 4px #cccccc;
     transform: scale(0.95);
-    transition: 0.15s, transform 0.15s, left 0.3s, top 0.3s, width 0.3s, height 0.3s;
+    transition: opacity $openCloseTime, transform $openCloseTime,
+                left $maxRestoreTime, top $maxRestoreTime,
+                width $maxRestoreTime, height $maxRestoreTime;
 
     &.open {
         opacity: 1;
@@ -227,7 +237,8 @@ $btnOffset: 2px;
     }
 
     &.drag-resize {
-        transition: 0.15s, transform 0.15s, left 0s, top 0s, width 0s, height 0s;
+        transition: opacity $openCloseTime, transform $openCloseTime,
+                    left 0s, top 0s, width 0s, height 0s;
     }
 
     &__title-bar {

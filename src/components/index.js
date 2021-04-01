@@ -1,3 +1,3 @@
 export { default as Window } from './Window';
-export { default as Breadcrumb } from './Breadcrumb';
+export { default as Navigation } from './Navigation';
 export { default as Taskbar } from './Taskbar';

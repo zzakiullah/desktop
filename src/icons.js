@@ -11,7 +11,9 @@ import {
     faCog,
     faChevronRight,
     faUserCircle,
-    faVolumeUp
+    faVolumeUp,
+    faArrowLeft,
+    faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faWindowMinimize,
@@ -39,6 +41,8 @@ library.add(
     faChevronRight,
     faUserCircle,
     faVolumeUp,
+    faArrowLeft,
+    faArrowRight,
     faWindowMinimize,
     faWindowMaximize,
     faWindowRestore,

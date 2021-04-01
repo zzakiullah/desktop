@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <Window title="about" iconName="folder" iconType="fas">
-      <Breadcrumb :items="[{ title: 'Hello', link: '#' }, { title: 'Again', link: '#' }]" />
+      <Navigation :items="[{ title: 'Hello', link: '#' }, { title: 'Again', link: '#' }]" />
     </Window>
   </div>
 </template>
 
 <script>
-import { Window, Breadcrumb } from './components/index'
+import { Window, Navigation } from './components/index'
 
 export default {
   name: 'App',
   components: {
-    Window, Breadcrumb
+    Window, Navigation
   }
 }
 </script>
