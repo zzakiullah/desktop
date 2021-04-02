@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Window title="About" iconName="user-circle" iconType="fas">
-      <Navigation :items="[{ title: 'Hello', link: '#' }, { title: 'Again', link: '#' }]" />
+      <Navigation :items="[{ title: 'Desktop', link: '#' }, { title: 'About', link: '#' }]" />
     </Window>
   </div>
 </template>

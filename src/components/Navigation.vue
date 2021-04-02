@@ -2,14 +2,12 @@
     <nav class="navigation" aria-label="navigation">
         <button class="navigation__btn navigation__btn--back"
                 :class="(history.back.disabled ? '' : 'enabled')"
-                :style="{ cursor: history.back.disabled ? 'auto' : 'pointer' }"
                 :disabled="history.back.disabled"
                 @click="updateHistory(history.back, history.forward)">
             <font-awesome-icon :icon="['fas', 'arrow-left']" />
         </button>
         <button class="navigation__btn navigation__btn--forward"
                 :class="(history.forward.disabled ? '' : 'enabled')"
-                :style="{ cursor: history.forward.disabled ? 'auto' : 'pointer' }"
                 :disabled="history.forward.disabled"
                 @click="updateHistory(history.forward, history.back)">
             <font-awesome-icon :icon="['fas', 'arrow-right']" />
@@ -20,10 +18,13 @@
                     {{ item.title }}
                 </a>
                 <button class="navigation__branch" :key="item.title">
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" class="chevron" />
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
                 </button>
             </li>
         </ul>
+        <button class="navigation__btn navigation__btn--settings">
+            <font-awesome-icon :icon="['fas', 'cog']" />
+        </button>
     </nav>
 </template>
 
@@ -34,8 +35,8 @@ export default {
         return {
             current: "",
             history: {
-                back: { disabled: false, stack: [] },
-                forward: { disabled: false, stack: [] }
+                back: { disabled: true, stack: [] },
+                forward: { disabled: true, stack: [] }
             }
         }
     },
@@ -57,12 +58,15 @@ export default {
 @import '../styles/_mixins.scss';
 @import '../styles/_variables.scss';
 
+$navBtnColor: #dedede;
+
 .navigation {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin: 12px 0;
 
     &__btn {
         display: inline-block;
@@ -72,13 +76,21 @@ export default {
         border-radius: 50%;
         outline: none;
         margin: 0 2px;
-        background-color: #dedede;
+        background-color: $navBtnColor;
+        font-size: 14px;
+        cursor: auto;
         transition: background-color 0.35s;
 
         &.enabled {
+            cursor: pointer;
+
             &:hover {
-                background-color: darken(#dedede, 10%);
+                background-color: darken($navBtnColor, 10%);
                 transition: none;
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px darken($navBtnColor, 20%);
             }
         }
 
@@ -89,43 +101,87 @@ export default {
         &--forward {
 
         }
+
+        &--settings {
+            font-size: 16px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken($navBtnColor, 10%);
+                transition: none;
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px darken($navBtnColor, 20%);
+            }
+        }
     }
 
     &__items-wrapper {
-        display: inline-block;
+        display: flex;
         flex-grow: 1;
         text-align: left;
-        padding: 10px 16px;
+        padding: 0 10px;
+        margin: 0 4px;
         list-style: none;
-        background-color: #eeeeee;
+        border: 2px solid #dedede;
     }
 
     &__item {
-        display: inline;
-        font-size: 18px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+        height: 27px;
     }
 
     &__link {
-        color: #0275d8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        border: none;
         text-decoration: none;
+        padding: 0 4px;
+        margin: 0;
+        height: 27px;
+        outline: none;
+        transition: background-color 0.3s;
 
         &:hover {
-            color: #01447e;
             text-decoration: none;
+            background-color: #eeeeee;
+        }
+
+        &:focus {
+            background-color: #eeeeee;
+            outline: 1px solid black;
         }
     }
 
     &__branch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
         border: none;
+        padding: 0 4px;
+        margin: 0;
+        height: 27px;
         outline: none;
         cursor: pointer;
+        transition: background-color 0.3s;
 
-        .chevron {
-            transition: transform 0.3s;
+        &:hover {
+            background-color: #eeeeee;
         }
 
-        &:hover > .chevron {
-            transform: rotate(90deg);
+        &:focus {
+            background-color: #eeeeee;
+            outline: 1px solid black;
         }
     }
 }

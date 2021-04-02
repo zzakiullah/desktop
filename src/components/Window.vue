@@ -27,7 +27,7 @@
             </button>
             <button class="window__btn window__btn--close"
                     @click="close()">
-                <font-awesome-icon :icon="['fas', 'times']" />
+                &times;
             </button>
         </div>
         <div class="window__content"
@@ -210,10 +210,10 @@ export default {
 
 $minimizeBtnColor: #dedede;
 $resizeBtnColor: #dedede;
-$closeBtnColor: #e81123;
+$closeBtnColor: #ff605c;
 
-$titleBarHeight: 25px;
-$btnOffset: 2px;
+$titleBarHeight: 30px;
+$btnOffset: 4px;
 
 $openCloseTime: 0.15s;
 $maxRestoreTime: 0.35s;
@@ -251,9 +251,10 @@ $maxRestoreTime: 0.35s;
     }
 
     &__icon {
-        font-size: 18px;
+        font-size: 20px;
         user-select: none;
         margin: 0 2px;
+        margin-right: 3px;
     }
 
     &__title {
@@ -280,26 +281,42 @@ $maxRestoreTime: 0.35s;
 
         &--minimize {
             background-color: $minimizeBtnColor;
+            font-size: 10px;
 
             &:hover {
                 background-color: darken($minimizeBtnColor, 10%);
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px darken($minimizeBtnColor, 20%);
             }
         }
 
         &--resize {
             background-color: $resizeBtnColor;
+            font-size: 12px;
 
             &:hover {
                 background-color: darken($resizeBtnColor, 10%);
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px darken($resizeBtnColor, 20%);
             }
         }
 
         &--close {
             color: #ffffff;
             background-color: $closeBtnColor;
+            font-size: 22px;
+            user-select: none;
 
             &:hover {
                 background-color: darken($closeBtnColor, 10%);
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px darken($closeBtnColor, 20%);
             }
         }
     }
