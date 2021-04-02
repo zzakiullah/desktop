@@ -17,9 +17,14 @@
                 <a class="navigation__link" :href="item.link">
                     {{ item.title }}
                 </a>
-                <button class="navigation__branch" :key="item.title">
+                <button class="navigation__link"
+                        :key="item.title"
+                        @click="openDropdown()">
                     <font-awesome-icon :icon="['fas', 'chevron-right']" />
                 </button>
+                <ul class="navigation__dropdown">
+
+                </ul>
             </li>
         </ul>
         <button class="navigation__btn navigation__btn--settings">
@@ -46,6 +51,9 @@ export default {
             this.current = to.stack.pop();
             from.disabled = (from.stack.length == 0);
             to.disabled = (to.stack.length == 0);
+        },
+        openDropdown: function() {
+
         }
     },
     props: {
@@ -143,45 +151,27 @@ $navBtnColor: #dedede;
         justify-content: center;
         align-items: center;
         background-color: transparent;
-        border: none;
+        border: 1px solid white;
         text-decoration: none;
         padding: 0 4px;
         margin: 0;
-        height: 27px;
+        height: 28px;
         outline: none;
-        transition: background-color 0.3s;
+        cursor: pointer;
+        transition: background-color 0.3s, border 0.3s;
 
-        &:hover {
+        &:hover, &:focus {
             text-decoration: none;
             background-color: #eeeeee;
-        }
-
-        &:focus {
-            background-color: #eeeeee;
-            outline: 1px solid black;
+            border: 1px solid black;
         }
     }
 
-    &__branch {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: transparent;
-        border: none;
-        padding: 0 4px;
-        margin: 0;
-        height: 27px;
-        outline: none;
-        cursor: pointer;
-        transition: background-color 0.3s;
+    &__dropdown {
+        display: none;
 
-        &:hover {
-            background-color: #eeeeee;
-        }
-
-        &:focus {
-            background-color: #eeeeee;
-            outline: 1px solid black;
+        &.show {
+            display: inline-block;
         }
     }
 }

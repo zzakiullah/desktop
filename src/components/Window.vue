@@ -1,12 +1,12 @@
 <template>
     <div class="window"
-         :class="(closed ? 'closed' : 'open') + ((action == 'dragging' || action == 'resizing') ? ' drag-resize' : '')"
+         :class="(closed ? 'closed' : 'open') + ((action == actions.DRAG || action == actions.RESIZE) ? ' drag-resize' : '')"
          :style="{ left: position.current.x + 'px', top: position.current.y + 'px',
                    width: size.current.w + 'px', height: size.current.h + 'px',
-                   padding: padding + 'px', cursor: ((action == 'dragging') ? 'grabbing' : resizeType) }"
+                   padding: padding + 'px', cursor: ((action == actions.DRAG) ? 'grabbing' : resizeType) }"
          @mousedown="startResize()">
         <div class="window__title-bar"
-             :style="{ cursor: ((action == 'dragging') ? 'grabbing' : ((action == 'resizing') ? resizeType : 'grab')) }"
+             :style="{ cursor: ((action == actions.DRAG) ? 'grabbing' : ((action == actions.RESIZE) ? resizeType : 'grab')) }"
              @mousedown="startDrag()">
             <div class="window__icon">
                 <font-awesome-icon :icon="[this.iconType, this.iconName]" />
@@ -31,8 +31,8 @@
             </button>
         </div>
         <div class="window__content"
-             :style="{ cursor: ((action == 'dragging') ? 'grabbing !important' : ((action == 'resizing') ? (resizeType + ' !important') : 'auto')),
-                             userSelect: ((action == 'dragging' || action == 'resizing') ? 'none !important' : 'auto') }">
+             :style="{ cursor: ((action == actions.DRAG) ? 'grabbing !important' : ((action == actions.RESIZE) ? (resizeType + ' !important') : 'auto')),
+                       userSelect: ((action == actions.DRAG || action == actions.RESIZE) ? 'none !important' : 'auto') }">
             <slot></slot>
         </div>
     </div>
@@ -56,7 +56,8 @@ export default {
             minimized: false,
             maximized: false,
             closed: false,
-            action: "none",
+            actions: { NONE: 0, DRAG: 1, RESIZE: 2 },
+            action: 0,
             resizeType: "auto"
         }
     },
@@ -95,14 +96,14 @@ export default {
             }.bind(this), 150);
         },
         startDrag: function() {
-            this.action = "dragging";
+            this.action = this.actions.DRAG;
             document.body.style.cursor = "grabbing";
             this.offset.x = event.clientX - this.position.current.x;
             this.offset.y = event.clientY - this.position.current.y;
         },
         startResize: function() {
             if (this.resizeType != "auto") {
-                this.action = "resizing";
+                this.action = this.actions.RESIZE;
                 document.body.style.cursor = this.resizeType;
                 this.offset.x = event.clientX - this.position.current.x;
                 this.offset.y = event.clientY - this.position.current.y;
@@ -112,7 +113,7 @@ export default {
             var mouseX = (event.clientX < 0) ? 0 : ((event.clientX > window.innerWidth) ? window.innerWidth : event.clientX),
                 mouseY = (event.clientY < 0) ? 0 : ((event.clientY > window.innerHeight) ? window.innerHeight : event.clientY);
             switch (this.action) {
-                case "dragging":
+                case this.actions.DRAG:
                     var x = event.clientX - this.offset.x,
                         y = event.clientY - this.offset.y,
                         w = this.size.current.w,
@@ -120,7 +121,7 @@ export default {
                     this.position.current.x = (x < 0) ? 0 : ((x + w > window.innerWidth) ? (window.innerWidth - w) : x);
                     this.position.current.y = (y < 0) ? 0 : ((y + h > window.innerHeight) ? (window.innerHeight - h) : y);
                     break;
-                case "resizing":
+                case this.actions.RESIZE:
                     switch (this.resizeType) {
                         case "ne-resize":
                             this.size.current.w = mouseX - this.position.current.x;
