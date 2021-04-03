@@ -1,13 +1,16 @@
 <template>
   <div id="app">
     <Window title="About" iconName="user-circle" iconType="fas">
-      <Navigation :items="[{ title: 'Desktop', link: '#' }, { title: 'About', link: '#' }]" />
+      <Navigation :items="[{ title: 'Desktop', url: '#' }, { title: 'About', url: '#' }]" />
     </Window>
   </div>
 </template>
 
 <script>
 import { Window, Navigation } from './components/index'
+//import LinkTree from './utils/link_tree';
+
+//var link_tree = LinkTree();
 
 export default {
   name: 'App',

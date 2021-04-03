@@ -13,21 +13,27 @@
             <font-awesome-icon :icon="['fas', 'arrow-right']" />
         </button>
         <ul class="navigation__items-wrapper">
-            <li class="navigation__item" v-for="item in items" :key="item.title">
-                <a class="navigation__link" :href="item.link">
+            <li class="navigation__item" v-for="(item, index) in items" :key="item.title">
+                <a class="navigation__link"
+                   :id="'NavLink' + index"
+                   :href="item.url">
                     {{ item.title }}
                 </a>
-                <button class="navigation__link"
-                        :key="item.title"
-                        @click="openDropdown()">
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                <button class="navigation__link navigation__link--chevron"
+                        :id="'NavDropdownBtn' + index"
+                        @click="openDropdown(index)"
+                        @blur="closeDropdown(index)">
+                    <span class="navigation__chevron" :id="'NavChevron' + index">
+                        <font-awesome-icon :icon="['fas', 'chevron-right']"/>
+                    </span>
                 </button>
-                <ul class="navigation__dropdown">
+                <ul class="navigation__dropdown" :id="'NavDropdown' + index">
 
                 </ul>
             </li>
         </ul>
-        <button class="navigation__btn navigation__btn--settings">
+        <button class="navigation__btn navigation__btn--settings"
+                @click="openSettings()">
             <font-awesome-icon :icon="['fas', 'cog']" />
         </button>
     </nav>
@@ -52,7 +58,19 @@ export default {
             from.disabled = (from.stack.length == 0);
             to.disabled = (to.stack.length == 0);
         },
-        openDropdown: function() {
+        openDropdown: function(index) {
+            document.getElementById("NavDropdownBtn" + index).style.transition = "none";
+            document.getElementById("NavDropdown" + index).className = "navigation__dropdown show";
+            document.getElementById("NavChevron" + index).className = "navigation__chevron down";
+        },
+        closeDropdown: function(index) {
+            document.getElementById("NavDropdown" + index).className = "navigation__dropdown";
+            document.getElementById("NavChevron" + index).className = "navigation__chevron";
+            setTimeout(function() {
+                document.getElementById("NavDropdownBtn" + index).style.transition = "0.3s all";
+            }.bind(this), 100);
+        },
+        openSettings: function() {
 
         }
     },
@@ -136,6 +154,7 @@ $navBtnColor: #dedede;
     }
 
     &__item {
+        position: relative;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -151,7 +170,8 @@ $navBtnColor: #dedede;
         justify-content: center;
         align-items: center;
         background-color: transparent;
-        border: 1px solid white;
+        color: black;
+        border: 2px solid #ffffff;
         text-decoration: none;
         padding: 0 4px;
         margin: 0;
@@ -160,15 +180,39 @@ $navBtnColor: #dedede;
         cursor: pointer;
         transition: background-color 0.3s, border 0.3s;
 
-        &:hover, &:focus {
+        &:hover {
             text-decoration: none;
-            background-color: #eeeeee;
-            border: 1px solid black;
+            background-color: #e5f3ff;
+            border: 2px solid #cce8ff;
+            transition: background-color 0.3s, border 0.3s;
+        }
+
+        &:focus {
+            text-decoration: none;
+            background-color: #cce8ff;
+            border: 2px solid #99d1ff;
+            transition: background-color 0.3s, border 0.3s;
+        }
+    }
+
+    &__chevron {
+        display: flex;
+
+        &.down {
+            transform: rotate(90deg);
         }
     }
 
     &__dropdown {
         display: none;
+        position: absolute;
+        right: -80%;
+        top: 100%;
+        z-index: 2;
+        width: 100px;
+        height: 100px;
+        transition: height 0.3s;
+        border: 1px solid blue;
 
         &.show {
             display: inline-block;
