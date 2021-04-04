@@ -198,6 +198,7 @@ export default {
         }.bind(this));
     },
     props: {
+        id: String,
         title: String,
         iconName: String,
         iconType: String

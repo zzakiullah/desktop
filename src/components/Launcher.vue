@@ -1,16 +1,34 @@
 <template>
-
+    <button class="launcher">
+        
+    </button>
 </template>
 
 <script>
 export default {
     name: "Launcher",
-    props: {
+    data: function() {
+        return {
 
+        }
+    },
+    methods: {
+
+    },
+    props: {
+        windowId: String,
+        name: String,
+        iconName: String,
+        iconType: String
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../styles/_mixins.scss';
+@import '../styles/_variables.scss';
 
+.launcher {
+
+}
 </style>
