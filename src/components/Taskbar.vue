@@ -1,17 +1,18 @@
 <template>
     <nav class="taskbar" aria-label="taskbar">
-        <Launcher title="About" showTitle=true windowId="AboutWindow" iconName="user-circle" iconType="fas" />
+        <span class="taskbar__icon-bar">
+            <slot></slot>
+        </span>
+        <span class="taskbar__system-tray">
+
+        </span>
     </nav>
 </template>
 
 <script>
-import { Launcher } from "./index";
 
 export default {
     name: "Taskbar",
-    components: {
-        Launcher
-    },
     data: function() {
         return {
 
@@ -31,6 +32,10 @@ export default {
 @import "../styles/_variables.scss";
 
 .taskbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -39,7 +44,16 @@ export default {
     height: 50px;
     border: 1px solid blue;
 
-    &__item {
+    &__icon-bar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        flex-grow: 1;
+        border: 1px solid red;
+    }
+
+    &__system-tray {
 
     }
 }

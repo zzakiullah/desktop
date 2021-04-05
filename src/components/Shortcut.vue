@@ -1,11 +1,11 @@
 <template>
-    <button class="launcher"
+    <button class="shortcut"
             :title="title"
             @click="openWindow()">
-        <span class="launcher__icon">
-
+        <span class="shortcut__icon">
+            <font-awesome-icon :icon="[this.iconType, this.iconName]" />
         </span>
-        <span class="launcher__title" v-if="showTitle">
+        <span class="shortcut__title" v-if="showTitle">
             {{ title }}
         </span>
     </button>
@@ -15,7 +15,7 @@
 import { bus } from "../main";
 
 export default {
-    name: "Launcher",
+    name: "Shortcut",
     data: function() {
         return {
 
@@ -40,7 +40,18 @@ export default {
 @import "../styles/_mixins.scss";
 @import "../styles/_variables.scss";
 
-.launcher {
+.shortcut {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__icon {
+
+    }
+
+    &__title {
+        
+    }
 }
 </style>

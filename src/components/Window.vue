@@ -191,11 +191,18 @@ export default {
         stopDragAndResize: function() {
             this.action = "none";
             document.body.style.cursor = "auto";
+        },
+        focus: function() {
+            // Control z-indices of all windows
         }
     },
     created: function() {
         bus.$on("open" + this.id, () => {
-            this.open();
+            if (this.closed) {
+                this.open();
+            } else {
+                this.focus();
+            }
         });
     },
     mounted: function() {
@@ -232,6 +239,7 @@ $maxRestoreTime: 0.35s;
 .window {
     display: inline-block;
     position: absolute;
+    background-color: white;
     box-shadow: 0px 0px 10px 4px #cccccc;
     transform: scale(1);
     opacity: 1;
