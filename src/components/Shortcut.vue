@@ -45,13 +45,32 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100%;
 
     &__icon {
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &__title {
         
     }
+}
+
+@include media($SM_SCREEN) {
+
+}
+
+@include media($MD_SCREEN) {
+
+}
+
+@include media($LG_SCREEN) {
+
+}
+
+@include media($XL_SCREEN) {
+
 }
 </style>

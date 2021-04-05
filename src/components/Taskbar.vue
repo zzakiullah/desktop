@@ -1,6 +1,16 @@
 <template>
     <nav class="taskbar" aria-label="taskbar">
         <span class="taskbar__icon-bar">
+            <button class="taskbar__launcher" title="Start">
+                <font-awesome-icon :icon="['fas', 'rocket']" />
+            </button>
+            <span class="taskbar__search-wrapper">
+                <font-awesome-icon :icon="['fas', 'search']"
+                                   class="taskbar__search-icon" />
+                <input class="taskbar__search-bar"
+                       type="text"
+                       placeholder="Type here to search">
+            </span>
             <slot></slot>
         </span>
         <span class="taskbar__system-tray">
@@ -10,7 +20,6 @@
 </template>
 
 <script>
-
 export default {
     name: "Taskbar",
     data: function() {
@@ -48,13 +57,41 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         flex-grow: 1;
-        border: 1px solid red;
+        height: 100%;
+    }
+
+    &__launcher {
+        height: 100%;
+    }
+
+    &__search {
+        &-wrapper {
+            position: relative;
+            height: 100%;
+        }
+
+        &-icon {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+        }
+
+        &-bar {
+            padding-left: 20px;
+            height: 100%;
+        }
     }
 
     &__system-tray {
-
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100%;
     }
 }
 
