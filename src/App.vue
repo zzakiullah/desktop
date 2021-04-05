@@ -1,28 +1,29 @@
 <template>
   <div id="app">
-    <Window title="About" iconName="user-circle" iconType="fas">
+    <Window id="AboutWindow" title="About" iconName="user-circle" iconType="fas">
       <Navigation :items="[{ title: 'Desktop', url: '#' }, { title: 'About', url: '#' }]" />
     </Window>
+    <Launcher title="About" showTitle=true windowId="AboutWindow" iconName="user-circle" iconType="fas" />
     <Taskbar />
   </div>
 </template>
 
 <script>
-import { Window, Navigation, Taskbar } from './components/index'
-//import LinkTree from './utils/link_tree';
+import { Window, Navigation, Taskbar, Launcher } from "./components/index"
+//import LinkTree from "./utils/link_tree";
 
 //var link_tree = LinkTree();
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Window, Navigation, Taskbar
+    Window, Navigation, Taskbar, Launcher
   }
 }
 </script>
 
 <style lang="scss">
-@import './styles/index.scss';
+@import "./styles/index.scss";
 
 #app {
   position: relative;

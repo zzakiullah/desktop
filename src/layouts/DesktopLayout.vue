@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { Taskbar } from '../components/Taskbar.vue';
+import { Taskbar } from "../components/Taskbar.vue";
 
 export default {
     name: "DesktopLayout",
@@ -30,8 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/_mixins.scss';
-@import '../styles/_variables.scss';
+@import "../styles/_mixins.scss";
+@import "../styles/_variables.scss";
 
 .desktop-layout {
     display: flex;

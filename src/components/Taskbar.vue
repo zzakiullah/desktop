@@ -1,31 +1,34 @@
 <template>
     <nav class="taskbar" aria-label="taskbar">
-        <ul class="taskbar__items-wrapper">
-
-        </ul>
+        <Launcher title="About" showTitle=true windowId="AboutWindow" iconName="user-circle" iconType="fas" />
     </nav>
 </template>
 
 <script>
+import { Launcher } from "./index";
+
 export default {
     name: "Taskbar",
+    components: {
+        Launcher
+    },
     data: function() {
         return {
 
         }
     },
     methods: {
-
+        
     },
     props: {
-
+        items: Array
     }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/_mixins.scss';
-@import '../styles/_variables.scss';
+@import "../styles/_mixins.scss";
+@import "../styles/_variables.scss";
 
 .taskbar {
     position: absolute;
@@ -36,12 +39,8 @@ export default {
     height: 50px;
     border: 1px solid blue;
 
-    &__items-wrapper {
-
-    }
-
     &__item {
-        
+
     }
 }
 

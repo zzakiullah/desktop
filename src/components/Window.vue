@@ -1,6 +1,6 @@
 <template>
     <div class="window"
-         :class="(closed ? 'closed' : 'open') + ((action == actions.DRAG || action == actions.RESIZE) ? ' drag-resize' : '')"
+         :class="{ 'closed': closed, 'drag-resize': (action == actions.DRAG || action == actions.RESIZE) }"
          :style="{ left: position.current.x + 'px', top: position.current.y + 'px',
                    width: size.current.w + 'px', height: size.current.h + 'px',
                    padding: padding + 'px', cursor: ((action == actions.DRAG) ? 'grabbing' : resizeType) }"
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { bus } from "../main";
+
 export default {
     name: "Window",
     data: function() {
@@ -85,7 +87,9 @@ export default {
         },
         open: function() {
             this.$el.style.display = "inline-block";
-            this.closed = false;
+            setTimeout(function() {
+                this.closed = false;
+            }.bind(this), 10);
         },
         close: function() {
             this.minimized = false;
@@ -189,11 +193,16 @@ export default {
             document.body.style.cursor = "auto";
         }
     },
+    created: function() {
+        bus.$on("open" + this.id, () => {
+            this.open();
+        });
+    },
     mounted: function() {
-        window.addEventListener('mousemove', function() {
+        window.addEventListener("mousemove", function() {
             this.doDragOrResize();
         }.bind(this));
-        window.addEventListener('mouseup', function() {
+        window.addEventListener("mouseup", function() {
             this.stopDragAndResize();
         }.bind(this));
     },
@@ -207,8 +216,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/_mixins.scss';
-@import '../styles/_variables.scss';
+@import "../styles/_mixins.scss";
+@import "../styles/_variables.scss";
 
 $minimizeBtnColor: #dedede;
 $resizeBtnColor: #dedede;
@@ -224,18 +233,15 @@ $maxRestoreTime: 0.35s;
     display: inline-block;
     position: absolute;
     box-shadow: 0px 0px 10px 4px #cccccc;
-    transform: scale(0.95);
+    transform: scale(1);
+    opacity: 1;
     transition: opacity $openCloseTime, transform $openCloseTime,
                 left $maxRestoreTime, top $maxRestoreTime,
                 width $maxRestoreTime, height $maxRestoreTime;
 
-    &.open {
-        opacity: 1;
-        transform: scale(1);
-    }
-
     &.closed {
         opacity: 0;
+        transform: scale(0.95);
     }
 
     &.drag-resize {

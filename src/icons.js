@@ -1,4 +1,4 @@
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faFolder,
     faTimes,
@@ -15,19 +15,19 @@ import {
     faVolumeUp,
     faArrowLeft,
     faArrowRight
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 import {
     faWindowMinimize,
     faWindowMaximize,
     faWindowRestore,
     faFilePdf,
     faFileWord
-} from '@fortawesome/free-regular-svg-icons';
+} from "@fortawesome/free-regular-svg-icons";
 import {
     faLinkedinIn,
     faGithub,
     faDiscord
-} from '@fortawesome/free-brands-svg-icons';
+} from "@fortawesome/free-brands-svg-icons";
 
 library.add(
     faFolder,
