@@ -164,9 +164,9 @@ export default {
                     break;
                 default:
                     var xInnerLeft = this.position.current.x + this.padding,
-                    xInnerRight = this.position.current.x + this.size.current.w - this.padding,
-                    yInnerTop = this.position.current.y + this.padding,
-                    yInnerBottom = this.position.current.y + this.size.current.h - this.padding;
+                        xInnerRight = this.position.current.x + this.size.current.w - this.padding,
+                        yInnerTop = this.position.current.y + this.padding,
+                        yInnerBottom = this.position.current.y + this.size.current.h - this.padding;
                     if (mouseX >= xInnerRight && mouseY <= yInnerTop) {
                         this.resizeType = "ne-resize";
                     } else if (mouseX <= xInnerLeft && mouseY <= yInnerTop) {
@@ -217,7 +217,9 @@ export default {
         id: String,
         title: String,
         iconName: String,
-        iconType: String
+        iconType: String,
+        maxWidth: Number,
+        maxHeight: Number
     }
 }
 </script>

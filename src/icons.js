@@ -5,9 +5,9 @@ import {
     faTrash,
     faEnvelope,
     faSearch,
-    faBatteryThreeQuarters,
     faPowerOff,
-    faVolumeUp,
+    faBatteryThreeQuarters,
+    faVolumeDown,
     faWifi,
     faPaperPlane,
     faCog,
@@ -33,7 +33,7 @@ import {
 import {
     faLinkedinIn,
     faGithub,
-    faDiscord
+    faBluetooth
 } from "@fortawesome/free-brands-svg-icons";
 
 library.add(
@@ -42,9 +42,9 @@ library.add(
     faTrash,
     faEnvelope,
     faSearch,
-    faBatteryThreeQuarters,
     faPowerOff,
-    faVolumeUp,
+    faBatteryThreeQuarters,
+    faVolumeDown,
     faWifi,
     faPaperPlane,
     faCog,
@@ -66,5 +66,5 @@ library.add(
     faWindowRestore,
     faLinkedinIn,
     faGithub,
-    faDiscord
+    faBluetooth
 );

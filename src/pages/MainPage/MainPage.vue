@@ -2,25 +2,25 @@
     <div class="main-page">
         <div class="main-page__content-wrapper">
             <!--<window id="SettingsWindow" title="Settings" iconName="cog" iconType="fas">
-                <Navigation :items="[{ title: 'Settings', url: '#' }]" />
+                <navigation :items="[{ title: 'Settings', url: '#' }]" />
             </window>-->
             <window id="AboutWindow" title="About" iconName="user-circle" iconType="fas">
-                <!--<Navigation :items="[{ title: 'Home', url: '#' }, { title: 'About', url: '#' }]" />-->
+                <navigation windowId="AboutWindow" :items="[{ title: 'Home', url: '#' }, { title: 'About', url: '#' }]" />
             </window>
             <window id="EducationWindow" title="Education" iconName="graduation-cap" iconType="fas">
-                <!--<Navigation :items="[{ title: 'Home', url: '#' }, { title: 'Education', url: '#' }]" />-->
+                <navigation windowId="EducationWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Education', url: '#' }]" />
             </window>
             <window id="SkillsWindow" title="Skills" iconName="wrench" iconType="fas">
-                <!--<Navigation :items="[{ title: 'Home', url: '#' }, { title: 'Skills', url: '#' }]" />-->
+                <navigation windowId="SkillsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Skills', url: '#' }]" />
             </window>
             <window id="ExperienceWindow" title="Experience" iconName="briefcase" iconType="fas">
-                <!--<Navigation :items="[{ title: 'Home', url: '#' }, { title: 'Experience', url: '#' }]" />-->
+                <navigation windowId="ExperienceWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Experience', url: '#' }]" />
             </window>
             <window id="ProjectsWindow" title="Projects" iconName="lightbulb" iconType="fas">
-                <!--<Navigation :items="[{ title: 'Home', url: '#' }, { title: 'Projects', url: '#' }]" />-->
+                <navigation windowId="ProjectsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Projects', url: '#' }]" />
             </window>
             <window id="ContactWindow" title="Contact" iconName="comment-alt" iconType="fas">
-                <!--<Navigation :items="[{ title: 'Home', url: '#' }, { title: 'Contact', url: '#' }]" />-->
+                <navigation windowId="ContactWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Contact', url: '#' }]" />
             </window>
         </div>
         <div class="main-page__taskbar-wrapper">
@@ -34,11 +34,13 @@ export default {
     name: "MainPage",
     data: function() {
         return {
-
+            windows: []
         }
     },
-    methods: function() {
+    methods: {
+        updateWindows: function() {
 
+        }
     },
     props: {
 
@@ -58,11 +60,10 @@ export default {
 
     &__content-wrapper {
         flex-grow: 1;
-        border: 1px solid blue;
     }
 
     &__taskbar-wrapper {
-        border: 1px solid red;
+        
     }
 }
 

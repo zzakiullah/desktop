@@ -15,27 +15,31 @@
         <ul class="navigation__items-wrapper">
             <li class="navigation__item" v-for="(item, index) in items" :key="item.title">
                 <a class="navigation__link"
-                   :id="'NavLink' + index"
+                   :id="windowId + 'NavLink' + index"
                    :href="item.url">
                     {{ item.title }}
                 </a>
                 <button class="navigation__link navigation__link--chevron"
-                        :id="'NavDropdownBtn' + index"
+                        :id="windowId + 'NavDropdownBtn' + index"
                         @click="openDropdown(index)"
                         @blur="closeDropdown(index)">
-                    <span class="navigation__chevron" :id="'NavChevron' + index">
+                    <span class="navigation__chevron" :id="windowId + 'NavChevron' + index">
                         <font-awesome-icon :icon="['fas', 'chevron-right']"/>
                     </span>
                 </button>
-                <ul class="navigation__dropdown" :id="'NavDropdown' + index">
+                <ul class="navigation__dropdown" :id="windowId + 'NavDropdown' + index">
 
                 </ul>
             </li>
         </ul>
-        <button class="navigation__btn navigation__btn--settings"
+        <span class="navigation__search-wrapper" v-if="showSettings">
+            <font-awesome-icon :icon="['fas', 'search']" class="navigation__search-icon" />
+            <input class="navigation__search-bar" placeholder="Search">
+        </span>
+        <!--<button class="navigation__btn navigation__btn--settings"
                 @click="openSettings()">
             <font-awesome-icon :icon="['fas', 'cog']" />
-        </button>
+        </button>-->
     </nav>
 </template>
 
@@ -59,15 +63,15 @@ export default {
             to.disabled = (to.stack.length == 0);
         },
         openDropdown: function(index) {
-            document.getElementById("NavDropdownBtn" + index).style.transition = "none";
-            document.getElementById("NavDropdown" + index).className = "navigation__dropdown show";
-            document.getElementById("NavChevron" + index).className = "navigation__chevron down";
+            document.getElementById(this.windowId + "NavDropdownBtn" + index).style.transition = "none";
+            document.getElementById(this.windowId + "NavDropdown" + index).className = "navigation__dropdown show";
+            document.getElementById(this.windowId + "NavChevron" + index).className = "navigation__chevron down";
         },
         closeDropdown: function(index) {
-            document.getElementById("NavDropdown" + index).className = "navigation__dropdown";
-            document.getElementById("NavChevron" + index).className = "navigation__chevron";
+            document.getElementById(this.windowId + "NavDropdown" + index).className = "navigation__dropdown";
+            document.getElementById(this.windowId + "NavChevron" + index).className = "navigation__chevron";
             setTimeout(function() {
-                document.getElementById("NavDropdownBtn" + index).style.transition = "0.3s all";
+                document.getElementById(this.windowId + "NavDropdownBtn" + index).style.transition = "0.3s all";
             }.bind(this), 100);
         },
         openSettings: function() {
@@ -75,7 +79,10 @@ export default {
         }
     },
     props: {
-        items: Array
+        windowId: String,
+        items: Array,
+        showSearch: Boolean,
+        showSettings: Boolean
     }
 }
 </script>
@@ -217,6 +224,26 @@ $navBtnColor: #dedede;
         &.show {
             display: inline-block;
         }
+    }
+
+    &__search-wrapper {
+        position: relative;
+        height: 100%;
+        margin: 0 4px;
+    }
+
+    &__search-bar {
+        height: 100%;
+        padding-left: 30px;
+        border: 2px solid #dedede;
+    }
+
+    &__search-icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 10px;
+        height: 100%;
     }
 }
 

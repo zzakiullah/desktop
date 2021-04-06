@@ -5,7 +5,7 @@
         <span class="shortcut__icon">
             <font-awesome-icon :icon="[this.iconType, this.iconName]" />
         </span>
-        <span class="shortcut__title" v-if="showTitle">
+        <span class="shortcut__title">
             {{ title }}
         </span>
     </button>
@@ -18,7 +18,7 @@ export default {
     name: "Shortcut",
     data: function() {
         return {
-
+            windowsOpen: 0
         }
     },
     methods: {
@@ -30,8 +30,7 @@ export default {
         windowId: String,
         title: String,
         iconName: String,
-        iconType: String,
-        showTitle: Boolean
+        iconType: String
     }
 }
 </script>
