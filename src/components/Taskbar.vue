@@ -11,7 +11,13 @@
                        type="text"
                        placeholder="Type here to search">
             </span>
-            <slot></slot>
+            <!--<shortcut title="Settings" windowId="SettingsWindow" iconName="cog" iconType="fas" />-->
+            <shortcut title="About" windowId="AboutWindow" iconName="user-circle" iconType="fas" />
+            <shortcut title="Education" windowId="EducationWindow" iconName="graduation-cap" iconType="fas" />
+            <shortcut title="Skills" windowId="SkillsWindow" iconName="wrench" iconType="fas" />
+            <shortcut title="Experience" windowId="ExperienceWindow" iconName="briefcase" iconType="fas" />
+            <shortcut title="Projects" windowId="ProjectsWindow" iconName="lightbulb" iconType="fas" />
+            <shortcut title="Contact" windowId="ContactWindow" iconName="comment-alt" iconType="fas" />
         </span>
         <span class="taskbar__system-tray">
 
@@ -45,13 +51,8 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     width: 100%;
-    height: 50px;
-    border: 1px solid blue;
+    height: 40px;
 
     &__icon-bar {
         display: flex;
@@ -76,12 +77,12 @@ export default {
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 0;
+            left: 10px;
             height: 100%;
         }
 
         &-bar {
-            padding-left: 20px;
+            padding-left: 30px;
             height: 100%;
         }
     }
