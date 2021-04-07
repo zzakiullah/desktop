@@ -1,0 +1,23 @@
+@import "./mixins.scss";
+@import "./variables.scss";
+
+.grid {
+    display: flex;
+    flex-direction: row;
+}
+
+@include media($SM_SCREEN) {
+
+}
+
+@include media($MD_SCREEN) {
+
+}
+
+@include media($LG_SCREEN) {
+
+}
+
+@include media($XL_SCREEN) {
+
+}

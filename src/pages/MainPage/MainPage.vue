@@ -4,22 +4,22 @@
             <!--<window id="SettingsWindow" title="Settings" iconName="cog" iconType="fas">
                 <navigation :items="[{ title: 'Settings', url: '#' }]" />
             </window>-->
-            <window id="AboutWindow" title="About" iconName="user-circle" iconType="fas">
+            <window id="AboutWindow" title="About" iconName="user-circle" iconType="fas" :zIndex="windows.indexOf('AboutWindow')">
                 <navigation windowId="AboutWindow" :items="[{ title: 'Home', url: '#' }, { title: 'About', url: '#' }]" />
             </window>
-            <window id="EducationWindow" title="Education" iconName="graduation-cap" iconType="fas">
+            <window id="EducationWindow" title="Education" iconName="graduation-cap" iconType="fas" :zIndex="windows.indexOf('EducationWindow')">
                 <navigation windowId="EducationWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Education', url: '#' }]" />
             </window>
-            <window id="SkillsWindow" title="Skills" iconName="wrench" iconType="fas">
+            <window id="SkillsWindow" title="Skills" iconName="wrench" iconType="fas" :zIndex="windows.indexOf('SkillsWindow')">
                 <navigation windowId="SkillsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Skills', url: '#' }]" />
             </window>
-            <window id="ExperienceWindow" title="Experience" iconName="briefcase" iconType="fas">
+            <window id="ExperienceWindow" title="Experience" iconName="briefcase" iconType="fas" :zIndex="windows.indexOf('ExperienceWindow')">
                 <navigation windowId="ExperienceWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Experience', url: '#' }]" />
             </window>
-            <window id="ProjectsWindow" title="Projects" iconName="lightbulb" iconType="fas">
+            <window id="ProjectsWindow" title="Projects" iconName="lightbulb" iconType="fas" :zIndex="windows.indexOf('ProjectsWindow')">
                 <navigation windowId="ProjectsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Projects', url: '#' }]" />
             </window>
-            <window id="ContactWindow" title="Contact" iconName="comment-alt" iconType="fas">
+            <window id="ContactWindow" title="Contact" iconName="comment-alt" iconType="fas" :zIndex="windows.indexOf('ContactWindow')">
                 <navigation windowId="ContactWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Contact', url: '#' }]" />
             </window>
         </div>
@@ -30,17 +30,24 @@
 </template>
 
 <script>
+import { bus } from "../../main";
+
 export default {
     name: "MainPage",
     data: function() {
         return {
-            windows: []
+            windows: ["AboutWindow", "EducationWindow", "SkillsWindow", "ExperienceWindow", "ProjectsWindow", "ContactWindow"]
         }
     },
     methods: {
-        updateWindows: function() {
-
+        updateWindowStack: function(windowId) {
+            this.windows.push(this.windows.splice(this.windows.indexOf(windowId), 1)[0]);
         }
+    },
+    created: function() {
+        bus.$on("bringToFront", (data) => {
+            this.updateWindowStack(data);
+        });
     },
     props: {
 

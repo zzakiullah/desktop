@@ -1,10 +1,13 @@
 <template>
     <div class="window"
+         tabIndex="-1"
          :class="{ 'closed': closed, 'drag-resize': (action == actions.DRAG || action == actions.RESIZE) }"
          :style="{ left: position.current.x + 'px', top: position.current.y + 'px',
                    width: size.current.w + 'px', height: size.current.h + 'px',
-                   padding: padding + 'px', cursor: ((action == actions.DRAG) ? 'grabbing' : resizeType) }"
-         @mousedown="startResize()">
+                   padding: padding + 'px', cursor: ((action == actions.DRAG) ? 'grabbing' : resizeType),
+                   zIndex: zIndex }"
+         @mousedown="startResize()"
+         @focus="bringToFront()">
         <div class="window__title-bar"
              :style="{ cursor: ((action == actions.DRAG) ? 'grabbing' : ((action == actions.RESIZE) ? resizeType : 'grab')) }"
              @mousedown="startDrag()">
@@ -27,7 +30,7 @@
             </button>
             <button class="window__btn window__btn--close"
                     @click="close()">
-                &times;
+                <font-awesome-icon :icon="['fas', 'times']" />
             </button>
         </div>
         <div class="window__content"
@@ -192,16 +195,14 @@ export default {
             this.action = "none";
             document.body.style.cursor = "auto";
         },
-        focus: function() {
-            // Control z-indices of all windows
+        bringToFront: function() {
+            bus.$emit("bringToFront", this.id);
         }
     },
     created: function() {
         bus.$on("open" + this.id, () => {
             if (this.closed) {
                 this.open();
-            } else {
-                this.focus();
             }
         });
     },
@@ -219,7 +220,8 @@ export default {
         iconName: String,
         iconType: String,
         maxWidth: Number,
-        maxHeight: Number
+        maxHeight: Number,
+        zIndex: Number
     }
 }
 </script>
@@ -248,6 +250,10 @@ $maxRestoreTime: 0.35s;
     transition: opacity $openCloseTime, transform $openCloseTime,
                 left $maxRestoreTime, top $maxRestoreTime,
                 width $maxRestoreTime, height $maxRestoreTime;
+
+    &:focus {
+        outline: none;
+    }
 
     &.closed {
         opacity: 0;
@@ -284,6 +290,9 @@ $maxRestoreTime: 0.35s;
     }
 
     &__btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: $titleBarHeight - $btnOffset;
         height: $titleBarHeight - $btnOffset;
         margin: 0 2px;
@@ -326,7 +335,7 @@ $maxRestoreTime: 0.35s;
         &--close {
             color: #ffffff;
             background-color: $closeBtnColor;
-            font-size: 22px;
+            font-size: 14px;
             user-select: none;
 
             &:hover {

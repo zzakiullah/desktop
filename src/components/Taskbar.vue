@@ -1,8 +1,21 @@
 <template>
-    <nav class="taskbar" aria-label="taskbar">
+    <nav class="taskbar"
+         aria-label="taskbar"
+         tabindex="-1"
+         @blur="closeStartMenu()">
+        <span class="taskbar__start-menu"
+              :class="{ open: startMenuOpen }">
+            Stuff
+        </span>
         <span class="taskbar__icon-bar">
-            <button class="taskbar__launcher" title="Start">
-                <font-awesome-icon :icon="['fas', 'rocket']" />
+            <button class="taskbar__launcher"
+                    @click="openStartMenu()">
+                <span class="taskbar__launcher-icon">
+                    <font-awesome-icon :icon="['fas', 'rocket']" />
+                </span>
+                <span class="taskbar__launcher-text">
+                    Start
+                </span>
             </button>
             <!--<span class="taskbar__search-wrapper">
                 <font-awesome-icon :icon="['fas', 'search']"
@@ -45,6 +58,7 @@ export default {
     data: function() {
         return {
             tabs: [],
+            startMenuOpen: false,
             timer: null,
             fullDate: 0,
             date: 0,
@@ -52,6 +66,13 @@ export default {
         }
     },
     methods: {
+        openStartMenu: function() {
+            this.startMenuOpen = true;
+            this.$el.focus();
+        },
+        closeStartMenu: function() {
+            this.startMenuOpen = false;
+        },
         updateDateTime: function() {
             var dt = new Date(),
                 month = (dt.getMonth() < 9 ? "0" : "") + (dt.getMonth() + 1),
@@ -82,6 +103,7 @@ export default {
 @import "../styles/_variables.scss";
 
 .taskbar {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -89,6 +111,25 @@ export default {
     width: 100%;
     height: 40px;
     background-color: #eeeeee;
+
+    &:focus {
+        outline: none;
+    }
+
+    &__start-menu {
+        display: none;
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        border: 1px solid blue;
+
+        &.open {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+        }
+    }
 
     &__icon-bar {
         display: flex;
@@ -100,7 +141,22 @@ export default {
     }
 
     &__launcher {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         height: 100%;
+        cursor: pointer;
+
+        &-icon {
+            margin: 0 3px;
+            font-size: 1rem;
+        }
+
+        &-text {
+            margin: 0 3px;
+            font-size: 0.85rem;
+        }
     }
 
     &__search {
@@ -132,12 +188,13 @@ export default {
     }
 
     &__tray-item {
-        margin: 0 4px;
+        margin: 0 6px;
     }
 
     &__date-time-display {
-        margin: 0 4px;
+        margin: 0 14px;
         user-select: none;
+        font-size: 0.85rem;
     }
 }
 

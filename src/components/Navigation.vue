@@ -72,7 +72,7 @@ export default {
             document.getElementById(this.windowId + "NavChevron" + index).className = "navigation__chevron";
             setTimeout(function() {
                 document.getElementById(this.windowId + "NavDropdownBtn" + index).style.transition = "0.3s all";
-            }.bind(this), 100);
+            }.bind(this), 10);
         },
         openSettings: function() {
 
