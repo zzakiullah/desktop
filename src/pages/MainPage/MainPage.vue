@@ -4,22 +4,28 @@
             <!--<window id="SettingsWindow" title="Settings" iconName="cog" iconType="fas">
                 <navigation :items="[{ title: 'Settings', url: '#' }]" />
             </window>-->
-            <window id="AboutWindow" title="About" iconName="user-circle" iconType="fas" :zIndex="windows.indexOf('AboutWindow')">
+            <window id="AboutWindow" title="About" iconName="user-circle" iconType="fas" :zIndex="windows.indexOf('AboutWindow')"
+                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
                 <navigation windowId="AboutWindow" :items="[{ title: 'Home', url: '#' }, { title: 'About', url: '#' }]" />
             </window>
-            <window id="EducationWindow" title="Education" iconName="graduation-cap" iconType="fas" :zIndex="windows.indexOf('EducationWindow')">
+            <window id="EducationWindow" title="Education" iconName="graduation-cap" iconType="fas" :zIndex="windows.indexOf('EducationWindow')"
+                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
                 <navigation windowId="EducationWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Education', url: '#' }]" />
             </window>
-            <window id="SkillsWindow" title="Skills" iconName="wrench" iconType="fas" :zIndex="windows.indexOf('SkillsWindow')">
+            <window id="SkillsWindow" title="Skills" iconName="wrench" iconType="fas" :zIndex="windows.indexOf('SkillsWindow')"
+                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
                 <navigation windowId="SkillsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Skills', url: '#' }]" />
             </window>
-            <window id="ExperienceWindow" title="Experience" iconName="briefcase" iconType="fas" :zIndex="windows.indexOf('ExperienceWindow')">
+            <window id="ExperienceWindow" title="Experience" iconName="briefcase" iconType="fas" :zIndex="windows.indexOf('ExperienceWindow')"
+                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
                 <navigation windowId="ExperienceWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Experience', url: '#' }]" />
             </window>
-            <window id="ProjectsWindow" title="Projects" iconName="lightbulb" iconType="fas" :zIndex="windows.indexOf('ProjectsWindow')">
+            <window id="ProjectsWindow" title="Projects" iconName="lightbulb" iconType="fas" :zIndex="windows.indexOf('ProjectsWindow')"
+                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
                 <navigation windowId="ProjectsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Projects', url: '#' }]" />
             </window>
-            <window id="ContactWindow" title="Contact" iconName="comment-alt" iconType="fas" :zIndex="windows.indexOf('ContactWindow')">
+            <window id="ContactWindow" title="Contact" iconName="at" iconType="fas" :zIndex="windows.indexOf('ContactWindow')"
+                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
                 <navigation windowId="ContactWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Contact', url: '#' }]" />
             </window>
         </div>
@@ -36,7 +42,9 @@ export default {
     name: "MainPage",
     data: function() {
         return {
-            windows: ["AboutWindow", "EducationWindow", "SkillsWindow", "ExperienceWindow", "ProjectsWindow", "ContactWindow"]
+            windows: ["AboutWindow", "EducationWindow", "SkillsWindow", "ExperienceWindow", "ProjectsWindow", "ContactWindow"],
+            maxWindowWidth: 0,
+            maxWindowHeight: 0
         }
     },
     methods: {
@@ -45,6 +53,8 @@ export default {
         }
     },
     created: function() {
+        this.maxWindowWidth = window.innerWidth;
+        this.maxWindowHeight = window.innerHeight - 40;
         bus.$on("bringToFront", (data) => {
             this.updateWindowStack(data);
         });

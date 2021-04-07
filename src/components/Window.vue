@@ -83,8 +83,8 @@ export default {
                 this.size.restore.h = this.size.current.h;
                 this.position.current.x = 0;
                 this.position.current.y = 0;
-                this.size.current.w = window.innerWidth;
-                this.size.current.h = window.innerHeight;
+                this.size.current.w = this.maxWidth;
+                this.size.current.h = this.maxHeight;
             }
             this.maximized = !this.maximized;
         },
@@ -109,7 +109,7 @@ export default {
             this.offset.y = event.clientY - this.position.current.y;
         },
         startResize: function() {
-            if (this.resizeType != "auto") {
+            if (this.resizeType != "auto" && !this.maximized) {
                 this.action = this.actions.RESIZE;
                 document.body.style.cursor = this.resizeType;
                 this.offset.x = event.clientX - this.position.current.x;
@@ -117,16 +117,16 @@ export default {
             }
         },
         doDragOrResize: function() {
-            var mouseX = (event.clientX < 0) ? 0 : ((event.clientX > window.innerWidth) ? window.innerWidth : event.clientX),
-                mouseY = (event.clientY < 0) ? 0 : ((event.clientY > window.innerHeight) ? window.innerHeight : event.clientY);
+            var mouseX = (event.clientX < 0) ? 0 : ((event.clientX > this.maxWidth) ? this.maxWidth : event.clientX),
+                mouseY = (event.clientY < 0) ? 0 : ((event.clientY > this.maxHeight) ? this.maxHeight : event.clientY);
             switch (this.action) {
                 case this.actions.DRAG:
                     var x = event.clientX - this.offset.x,
                         y = event.clientY - this.offset.y,
                         w = this.size.current.w,
                         h = this.size.current.h;
-                    this.position.current.x = (x < 0) ? 0 : ((x + w > window.innerWidth) ? (window.innerWidth - w) : x);
-                    this.position.current.y = (y < 0) ? 0 : ((y + h > window.innerHeight) ? (window.innerHeight - h) : y);
+                    this.position.current.x = (x < 0) ? 0 : ((x + w > this.maxWidth) ? (this.maxWidth - w) : x);
+                    this.position.current.y = (y < 0) ? 0 : ((y + h > this.maxHeight) ? (this.maxHeight - h) : y);
                     break;
                 case this.actions.RESIZE:
                     switch (this.resizeType) {
@@ -166,6 +166,7 @@ export default {
                     }
                     break;
                 default:
+                    if (this.maximized) { return; }
                     var xInnerLeft = this.position.current.x + this.padding,
                         xInnerRight = this.position.current.x + this.size.current.w - this.padding,
                         yInnerTop = this.position.current.y + this.padding,

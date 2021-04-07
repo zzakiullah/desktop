@@ -6,6 +6,11 @@
     flex-direction: row;
 }
 
+.col {
+    display: flex;
+    flex-direction: row;
+}
+
 @include media($SM_SCREEN) {
 
 }

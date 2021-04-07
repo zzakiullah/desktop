@@ -48,6 +48,9 @@
             <span class="taskbar__date-time-display" :title="fullDate">
                 {{ time }}<br>{{ date }}
             </span>
+            <span class="taskbar__notifications" title="No new notifications">
+                <font-awesome-icon :icon="['far', 'comment-alt']" />
+            </span>
         </span>
     </nav>
 </template>
@@ -111,6 +114,7 @@ export default {
     width: 100%;
     height: 40px;
     background-color: #eeeeee;
+    z-index: 100;
 
     &:focus {
         outline: none;
@@ -192,9 +196,14 @@ export default {
     }
 
     &__date-time-display {
-        margin: 0 14px;
+        margin: 0 6px;
         user-select: none;
         font-size: 0.85rem;
+    }
+
+    &__notifications {
+        margin-left: 10px;
+        margin-right: 16px;
     }
 }
 
