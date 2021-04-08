@@ -178,7 +178,7 @@ $navBtnColor: #dedede;
         align-items: center;
         background-color: transparent;
         color: black;
-        border: 2px solid #ffffff;
+        border: 2px solid transparent;
         text-decoration: none;
         padding: 0 4px;
         margin: 0;

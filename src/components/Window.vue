@@ -60,7 +60,7 @@ export default {
             padding: 5,
             minimized: false,
             maximized: false,
-            closed: false,
+            closed: true,
             actions: { NONE: 0, DRAG: 1, RESIZE: 2 },
             action: 0,
             resizeType: "auto"
@@ -100,6 +100,7 @@ export default {
             this.action = "none"
             setTimeout(function() {
                 this.$el.style.display = "none";
+                bus.$emit("closeWindow", this.id);
             }.bind(this), 150);
         },
         startDrag: function() {

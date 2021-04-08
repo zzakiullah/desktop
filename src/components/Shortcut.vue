@@ -3,7 +3,7 @@
             :title="title"
             @click="openWindow()">
         <span class="shortcut__icon">
-            <font-awesome-icon :icon="[this.iconType, this.iconName]" />
+            <font-awesome-icon :icon="[iconType, iconName]" />
         </span>
         <span class="shortcut__title">
             {{ title }}
@@ -18,16 +18,16 @@ export default {
     name: "Shortcut",
     data: function() {
         return {
-            windowsOpen: 0
+            windowsOpened: 0
         }
     },
     methods: {
         openWindow: function() {
-            bus.$emit("open" + this.windowId);
+            bus.$emit("openWindow", this.title, this.windowsOpened, this.iconName, this.iconType);
+            this.windowsOpened++;
         }
     },
     props: {
-        windowId: String,
         title: String,
         iconName: String,
         iconType: String
@@ -45,6 +45,22 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100%;
+    background-color: transparent;
+    border: 2px solid transparent;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s, border 0.3s;
+
+    &:hover {
+        background-color: rgba(#e5f3ff, 0.6);
+        border: 2px solid #e5f3ff;
+    }
+
+    &:focus {
+        background-color: rgba(#cce8ff, 0.6);
+        border: 2px solid #cce8ff;
+        outline: none;
+    }
 
     &__icon {
         display: flex;
