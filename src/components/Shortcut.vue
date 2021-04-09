@@ -1,11 +1,11 @@
 <template>
-    <button class="shortcut"
-            :title="title"
-            @click="openWindow()">
+    <a v-if="href" class="shortcut" :title="title" :href="href" target="_blank">
         <img class="shortcut__icon" :src="iconSrc" :alt="title">
-        <span class="shortcut__title">
-            {{ title }}
-        </span>
+        <span class="shortcut__title">{{ title }}</span>
+    </a>
+    <button v-else class="shortcut" :title="title" @click="openWindow()">
+        <img class="shortcut__icon" :src="iconSrc" :alt="title">
+        <span class="shortcut__title">{{ title }}</span>
     </button>
 </template>
 
@@ -30,7 +30,8 @@ export default {
         this.iconSrc = require("../assets/" + this.title.toLowerCase() + ".png");
     },
     props: {
-        title: String
+        title: String,
+        href: String
     }
 }
 </script>
@@ -50,6 +51,8 @@ export default {
     border: 2px solid transparent;
     outline: none;
     cursor: pointer;
+    text-decoration: none;
+    color: #000000;
     transition: background-color 0.3s, border 0.3s;
 
     &:hover {

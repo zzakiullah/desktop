@@ -5,11 +5,16 @@
          @blur="closeStartMenu()">
         <span class="taskbar__start-menu"
               :class="{ open: startMenuOpen }">
-            <span class="taskbar__start-menu-item">
+            <button class="taskbar__start-menu-item">
+                <font-awesome-icon :icon="['fas', 'undo']"
+                                   class="taskbar__start-menu-icon" />
+               Restart
+            </button>
+            <button class="taskbar__start-menu-item">
                 <font-awesome-icon :icon="['fas', 'power-off']"
                                    class="taskbar__start-menu-icon" />
                 Power Off
-            </span>
+            </button>
         </span>
         <span class="taskbar__icon-bar">
             <button class="taskbar__launcher"

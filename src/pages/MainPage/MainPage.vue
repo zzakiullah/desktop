@@ -4,25 +4,31 @@
             <div class="main-page__content main-page__content--primary">
                 <div class="grid">
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Home" iconName="user-circle" iconType="fas" />
+                        <shortcut title="Home" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="About" iconName="user-circle" iconType="fas" />
+                        <shortcut title="About" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Education" iconName="graduation-cap" iconType="fas" />
+                        <shortcut title="Education" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Skills" iconName="wrench" iconType="fas" />
+                        <shortcut title="Skills" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Experience" iconName="briefcase" iconType="fas" />
+                        <shortcut title="Experience" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Projects" iconName="lightbulb" iconType="fas" />
+                        <shortcut title="Projects" />
+                    </div>
+                    <!--<div class="grid__column grid__column--half">
+                        <shortcut title="Games" />
+                    </div>-->
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="Contact" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Contact" iconName="at" iconType="fas" />
+                        <shortcut title="Resume" href="Resume_2B.pdf" />
                     </div>
                 </div>
             </div>

@@ -202,6 +202,13 @@ export default {
     },
     created: function() {
         this.iconSrc = require("../assets/" + this.title.toLowerCase() + ".png");
+        if (this.centerAtStart) {
+            this.position.current.x = 0.5 * (this.maxWidth - this.size.current.w);
+            this.position.current.y = 0.5 * (this.maxHeight - this.size.current.h);
+        } else {
+            this.position.current.x = Math.floor(Math.random() * (this.maxWidth - this.size.current.w + 1));
+            this.position.current.y = Math.floor(Math.random() * (this.maxHeight - this.size.current.h + 1));
+        }
         bus.$on("open" + this.id, () => {
             if (this.closed) {
                 this.open();
@@ -221,7 +228,8 @@ export default {
         title: String,
         maxWidth: Number,
         maxHeight: Number,
-        zIndex: Number
+        zIndex: Number,
+        centerAtStart: Boolean
     }
 }
 </script>
