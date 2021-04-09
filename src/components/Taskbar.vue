@@ -5,7 +5,11 @@
          @blur="closeStartMenu()">
         <span class="taskbar__start-menu"
               :class="{ open: startMenuOpen }">
-            Stuff
+            <span class="taskbar__start-menu-item">
+                <font-awesome-icon :icon="['fas', 'power-off']"
+                                   class="taskbar__start-menu-icon" />
+                Power Off
+            </span>
         </span>
         <span class="taskbar__icon-bar">
             <button class="taskbar__launcher"
@@ -24,13 +28,6 @@
                        type="text"
                        placeholder="Type here to search">
             </span>-->
-            <!--<shortcut title="Settings" windowId="SettingsWindow" iconName="cog" iconType="fas" />
-            <shortcut title="About" windowId="AboutWindow" iconName="user-circle" iconType="fas" />
-            <shortcut title="Education" windowId="EducationWindow" iconName="graduation-cap" iconType="fas" />
-            <shortcut title="Skills" windowId="SkillsWindow" iconName="wrench" iconType="fas" />
-            <shortcut title="Experience" windowId="ExperienceWindow" iconName="briefcase" iconType="fas" />
-            <shortcut title="Projects" windowId="ProjectsWindow" iconName="lightbulb" iconType="fas" />
-            <shortcut title="Contact" windowId="ContactWindow" iconName="comment-alt" iconType="fas" />-->
         </span>
         <span class="taskbar__system-tray">
             <span class="taskbar__tray-item" title="Internet access">
@@ -125,6 +122,7 @@ export default {
         position: absolute;
         bottom: 100%;
         left: 0;
+        padding: 1rem;
         border: 1px solid blue;
 
         &.open {
@@ -132,6 +130,14 @@ export default {
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
+        }
+
+        &-item {
+            display: flex;
+        }
+
+        &-icon {
+            margin-right: 0.5rem;
         }
     }
 

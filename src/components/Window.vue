@@ -11,9 +11,7 @@
         <div class="window__title-bar"
              :style="{ cursor: ((action == actions.DRAG) ? 'grabbing' : ((action == actions.RESIZE) ? resizeType : 'grab')) }"
              @mousedown="startDrag()">
-            <div class="window__icon">
-                <font-awesome-icon :icon="[this.iconType, this.iconName]" />
-            </div>
+            <img class="window__icon" :src="iconSrc" :alt="title">
             <div class="window__title">
                 {{ title }}
             </div>
@@ -63,7 +61,8 @@ export default {
             closed: true,
             actions: { NONE: 0, DRAG: 1, RESIZE: 2 },
             action: 0,
-            resizeType: "auto"
+            resizeType: "auto",
+            iconSrc: ""
         }
     },
     methods: {
@@ -202,6 +201,7 @@ export default {
         }
     },
     created: function() {
+        this.iconSrc = require("../assets/" + this.title.toLowerCase() + ".png");
         bus.$on("open" + this.id, () => {
             if (this.closed) {
                 this.open();
@@ -219,8 +219,6 @@ export default {
     props: {
         id: String,
         title: String,
-        iconName: String,
-        iconType: String,
         maxWidth: Number,
         maxHeight: Number,
         zIndex: Number
@@ -246,7 +244,7 @@ $maxRestoreTime: 0.35s;
     display: inline-block;
     position: absolute;
     background-color: white;
-    box-shadow: 0px 0px 10px 4px #cccccc;
+    box-shadow: 0px 0px 10px 2px #cccccc;
     transform: scale(1);
     opacity: 1;
     transition: opacity $openCloseTime, transform $openCloseTime,
@@ -277,10 +275,11 @@ $maxRestoreTime: 0.35s;
     }
 
     &__icon {
-        font-size: 20px;
         user-select: none;
         margin: 0 2px;
         margin-right: 3px;
+        height: 26px;
+        width: auto;
     }
 
     &__title {

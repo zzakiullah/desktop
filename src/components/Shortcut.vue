@@ -2,9 +2,7 @@
     <button class="shortcut"
             :title="title"
             @click="openWindow()">
-        <span class="shortcut__icon">
-            <font-awesome-icon :icon="[iconType, iconName]" />
-        </span>
+        <img class="shortcut__icon" :src="iconSrc" :alt="title">
         <span class="shortcut__title">
             {{ title }}
         </span>
@@ -18,19 +16,21 @@ export default {
     name: "Shortcut",
     data: function() {
         return {
-            windowsOpened: 0
+            windowsOpened: 0,
+            iconSrc: ""
         }
     },
     methods: {
         openWindow: function() {
-            bus.$emit("openWindow", this.title, this.windowsOpened, this.iconName, this.iconType);
+            bus.$emit("openWindow", this.title, this.windowsOpened);
             this.windowsOpened++;
         }
     },
+    created: function() {
+        this.iconSrc = require("../assets/" + this.title.toLowerCase() + ".png");
+    },
     props: {
-        title: String,
-        iconName: String,
-        iconType: String
+        title: String
     }
 }
 </script>
@@ -44,6 +44,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100px;
     height: 100%;
     background-color: transparent;
     border: 2px solid transparent;
@@ -66,10 +67,12 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 80px;
+        height: auto;
     }
 
     &__title {
-        
+        font-size: 11pt;
     }
 }
 

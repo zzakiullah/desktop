@@ -1,50 +1,45 @@
 <template>
     <div class="main-page">
         <div class="main-page__content-wrapper">
-            <div class="grid">
-                <shortcut title="About" iconName="user-circle" iconType="fas" />
-                <shortcut title="Education" iconName="graduation-cap" iconType="fas" />
-                <shortcut title="Skills" iconName="wrench" iconType="fas" />
-                <shortcut title="Experience" iconName="briefcase" iconType="fas" />
-                <shortcut title="Projects" iconName="lightbulb" iconType="fas" />
-                <shortcut title="Contact" iconName="at" iconType="fas" />
+            <div class="main-page__content main-page__content--primary">
+                <div class="grid">
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="Home" iconName="user-circle" iconType="fas" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="About" iconName="user-circle" iconType="fas" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="Education" iconName="graduation-cap" iconType="fas" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="Skills" iconName="wrench" iconType="fas" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="Experience" iconName="briefcase" iconType="fas" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="Projects" iconName="lightbulb" iconType="fas" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut title="Contact" iconName="at" iconType="fas" />
+                    </div>
+                </div>
+            </div>
+            <div class="main-page__content main-page__content--secondary">
+                <div class="grid">
+                    <div class="grid__column">
+                        <shortcut title="Trash" iconName="at" iconType="fas" />
+                    </div>
+                </div>
             </div>
             <window v-for="(windowId, index) in windowIds"
                     :key="windowId"
                     :id="windowId"
                     :title="windowInfo[index]['title']"
-                    :iconName="windowInfo[index]['iconName']"
-                    :iconType="windowInfo[index]['iconType']"
                     :zIndex="windowIds.indexOf(windowId)"
                     :maxWidth="maxWindowWidth"
                     :maxHeight="maxWindowHeight" />
-            <!--<window id="SettingsWindow" title="Settings" iconName="cog" iconType="fas">
-                <navigation :items="[{ title: 'Settings', url: '#' }]" />
-            </window>-->
-            <!--<window id="AboutWindow" title="About" iconName="user-circle" iconType="fas" :zIndex="windowIds.indexOf('AboutWindow')"
-                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
-                <navigation windowId="AboutWindow" :items="[{ title: 'Home', url: '#' }, { title: 'About', url: '#' }]" />
-            </window>
-            <window id="EducationWindow" title="Education" iconName="graduation-cap" iconType="fas" :zIndex="windowIds.indexOf('EducationWindow')"
-                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
-                <navigation windowId="EducationWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Education', url: '#' }]" />
-            </window>
-            <window id="SkillsWindow" title="Skills" iconName="wrench" iconType="fas" :zIndex="windowIds.indexOf('SkillsWindow')"
-                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
-                <navigation windowId="SkillsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Skills', url: '#' }]" />
-            </window>
-            <window id="ExperienceWindow" title="Experience" iconName="briefcase" iconType="fas" :zIndex="windowIds.indexOf('ExperienceWindow')"
-                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
-                <navigation windowId="ExperienceWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Experience', url: '#' }]" />
-            </window>
-            <window id="ProjectsWindow" title="Projects" iconName="lightbulb" iconType="fas" :zIndex="windowIds.indexOf('ProjectsWindow')"
-                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
-                <navigation windowId="ProjectsWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Projects', url: '#' }]" />
-            </window>
-            <window id="ContactWindow" title="Contact" iconName="at" iconType="fas" :zIndex="windowIds.indexOf('ContactWindow')"
-                    :maxWidth="maxWindowWidth" :maxHeight="maxWindowHeight">
-                <navigation windowId="ContactWindow" :items="[{ title: 'Home', url: '#' }, { title: 'Contact', url: '#' }]" />
-            </window>-->
         </div>
         <div class="main-page__taskbar-wrapper">
             <taskbar />
@@ -59,7 +54,6 @@ export default {
     name: "MainPage",
     data: function() {
         return {
-            //windows: ["AboutWindow", "EducationWindow", "SkillsWindow", "ExperienceWindow", "ProjectsWindow", "ContactWindow"],
             windowIds: [],
             windowInfo: [],
             maxWindowWidth: 0,
@@ -84,9 +78,9 @@ export default {
         bus.$on("bringToFront", (data) => {
             this.updateWindowStack(data);
         });
-        bus.$on("openWindow", (title, num, iconName, iconType) => {
+        bus.$on("openWindow", (title, num) => {
             this.windowIds.push(title + num);
-            this.windowInfo.push({ "title": title, "iconName": iconName, "iconType": iconType });
+            this.windowInfo.push({ "title": title });
             setTimeout(function() {
                 bus.$emit("open" + title + num);
             }.bind(this), 10);
@@ -113,7 +107,29 @@ export default {
     height: 100%;
 
     &__content-wrapper {
+        display: flex;
+        flex-direction: row;
         flex-grow: 1;
+        justify-content: space-between;
+    }
+
+    &__content {
+        padding: 0;
+        margin: 0;
+
+        &--primary {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 200px;
+        }
+
+        &--secondary {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            width: 100px;
+        }
     }
 
     &__taskbar-wrapper {

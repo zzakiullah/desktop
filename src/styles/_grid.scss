@@ -4,11 +4,25 @@
 .grid {
     display: flex;
     flex-direction: row;
-}
+    flex-wrap: wrap;
+    flex-basis: auto;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 
-.col {
-    display: flex;
-    flex-direction: row;
+    &__column {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0.2rem;
+        margin: 0;
+        width: 100%;
+
+        &--half {
+            width: 50%;
+        }
+    }
 }
 
 @include media($SM_SCREEN) {
