@@ -1,10 +1,10 @@
 <template>
     <a v-if="href" class="shortcut" :title="title" :href="href" target="_blank">
-        <img class="shortcut__icon" :src="iconSrc" :alt="title">
+        <img class="shortcut__icon" :src="iconSrc">
         <span class="shortcut__title">{{ title }}</span>
     </a>
     <button v-else class="shortcut" :title="title" @click="openWindow()">
-        <img class="shortcut__icon" :src="iconSrc" :alt="title">
+        <img class="shortcut__icon" :src="iconSrc">
         <span class="shortcut__title">{{ title }}</span>
     </button>
 </template>
@@ -22,15 +22,16 @@ export default {
     },
     methods: {
         openWindow: function() {
-            bus.$emit("openWindow", this.title, this.windowsOpened);
+            bus.$emit("openWindow", [this.title + this.windowsOpened, this.iconSrc]);
             this.windowsOpened++;
         }
     },
     created: function() {
-        this.iconSrc = require("../assets/" + this.title.toLowerCase() + ".png");
+        this.iconSrc = require("../assets/" + this.iconPath);
     },
     props: {
         title: String,
+        iconPath: String,
         href: String
     }
 }

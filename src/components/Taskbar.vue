@@ -3,66 +3,73 @@
          aria-label="taskbar"
          tabindex="-1"
          @blur="closeStartMenu()">
-        <span class="taskbar__start-menu"
+        <div class="taskbar__start-menu"
               :class="{ open: startMenuOpen }">
-            <button class="taskbar__start-menu-item">
+            <button class="taskbar__start-menu-item--btn">
                 <font-awesome-icon :icon="['fas', 'undo']"
                                    class="taskbar__start-menu-icon" />
                Restart
             </button>
-            <button class="taskbar__start-menu-item">
+            <button class="taskbar__start-menu-item--btn">
                 <font-awesome-icon :icon="['fas', 'power-off']"
                                    class="taskbar__start-menu-icon" />
                 Power Off
             </button>
-        </span>
-        <span class="taskbar__icon-bar">
+        </div>
+        <div class="taskbar__icon-bar">
             <button class="taskbar__launcher"
                     @click="openStartMenu()">
-                <span class="taskbar__launcher-icon">
+                <div class="taskbar__launcher-icon">
                     <font-awesome-icon :icon="['fas', 'rocket']" />
-                </span>
-                <span class="taskbar__launcher-text">
+                </div>
+                <div class="taskbar__launcher-text">
                     Start
-                </span>
+                </div>
             </button>
-            <!--<span class="taskbar__search-wrapper">
+            <!--<div class="taskbar__search-wrapper">
                 <font-awesome-icon :icon="['fas', 'search']"
                                    class="taskbar__search-icon" />
                 <input class="taskbar__search-bar"
                        type="text"
                        placeholder="Type here to search">
-            </span>-->
-        </span>
-        <span class="taskbar__system-tray">
-            <span class="taskbar__tray-item" title="Internet access">
+            </div>-->
+            <button v-for="(tabId, index) in tabIds" :key="tabId" @click="focusWindow(tabId)" class="taskbar__tab">
+                <img class="taskbar__tab-icon" :src="tabIconSrcs[index]">
+                <span class="taskbar__tab-title">{{ tabId.replace(/[0-9]/g, "") }}</span>
+            </button>
+        </div>
+        <div class="taskbar__system-tray">
+            <div class="taskbar__tray-item" title="Internet access">
                 <font-awesome-icon :icon="['fas', 'wifi']" />
-            </span>
-            <span class="taskbar__tray-item" title="Bluetooth Devices">
+            </div>
+            <div class="taskbar__tray-item" title="Bluetooth Devices">
                 <font-awesome-icon :icon="['fab', 'bluetooth']" />
-            </span>
-            <span class="taskbar__tray-item" title="Speakers: 20%">
+            </div>
+            <div class="taskbar__tray-item" title="Speakers: 20%">
                 <font-awesome-icon :icon="['fas', 'volume-down']" />
-            </span>
-            <span class="taskbar__tray-item" title="2 hr 1 min (87%) remaining">
+            </div>
+            <div class="taskbar__tray-item" title="2 hr 1 min (87%) remaining">
                 <font-awesome-icon :icon="['fas', 'battery-three-quarters']" />
-            </span>
-            <span class="taskbar__date-time-display" :title="fullDate">
+            </div>
+            <div class="taskbar__date-time-display" :title="fullDate">
                 {{ time }}<br>{{ date }}
-            </span>
-            <span class="taskbar__notifications" title="No new notifications">
+            </div>
+            <div class="taskbar__notifications" title="No new notifications">
                 <font-awesome-icon :icon="['far', 'comment-alt']" />
-            </span>
-        </span>
+            </div>
+        </div>
     </nav>
 </template>
 
 <script>
+import { bus } from "../main";
+
 export default {
     name: "Taskbar",
     data: function() {
         return {
-            tabs: [],
+            tabIds: [],
+            tabIconSrcs: [],
             startMenuOpen: false,
             timer: null,
             fullDate: 0,
@@ -88,11 +95,29 @@ export default {
             this.fullDate = dt;
             this.date = dt.getFullYear() + "-" + month + "-" + date;
             this.time = hours + ":" + minutes + " " + period;
+        },
+        createTab: function(windowId, iconSrc) {
+            this.tabIds.push(windowId);
+            this.tabIconSrcs.push(iconSrc);
+        },
+        removeTab: function(windowId) {
+            var index = this.tabIds.indexOf(windowId);
+            this.tabIds.splice(index, 1);
+            this.tabIconSrcs.splice(index, 1);
+        },
+        focusWindow: function(tabId) {
+            bus.$emit("focusWindow", tabId);
         }
     },
     created: function() {
         this.updateDateTime();
         this.timer = setInterval(this.updateDateTime, 1000);
+        bus.$on("openWindow", (data) => {
+            this.createTab(data[0], data[1]);
+        });
+        bus.$on("closeWindow", (data) => {
+            this.removeTab(data[0]);
+        });
     },
     destroyed: function() {
         clearInterval(this.timer);
@@ -139,6 +164,10 @@ export default {
 
         &-item {
             display: flex;
+
+            &--btn {
+                cursor: pointer;
+            }
         }
 
         &-icon {
@@ -161,16 +190,18 @@ export default {
         align-items: center;
         justify-content: center;
         height: 100%;
+        margin-right: 10px;
         cursor: pointer;
 
         &-icon {
             margin: 0 3px;
-            font-size: 1rem;
+            font-size: 12pt;
         }
 
         &-text {
             margin: 0 3px;
-            font-size: 0.85rem;
+            font-size: 12pt;
+            font-weight: bold;
         }
     }
 
@@ -191,6 +222,27 @@ export default {
         &-bar {
             padding-left: 30px;
             height: 100%;
+        }
+    }
+
+    &__tab {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        cursor: pointer;
+
+        &.focused {
+
+        }
+
+        &-icon {
+            width: 30px;
+        }
+
+        &-title {
+            margin-left: 3px;
         }
     }
 

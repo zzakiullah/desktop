@@ -11,7 +11,7 @@
         <div class="window__title-bar"
              :style="{ cursor: ((action == actions.DRAG) ? 'grabbing' : ((action == actions.RESIZE) ? resizeType : 'grab')) }"
              @mousedown="startDrag()">
-            <img class="window__icon" :src="iconSrc" :alt="title">
+            <img class="window__icon" :src="iconSrc">
             <div class="window__title">
                 {{ title }}
             </div>
@@ -61,8 +61,7 @@ export default {
             closed: true,
             actions: { NONE: 0, DRAG: 1, RESIZE: 2 },
             action: 0,
-            resizeType: "auto",
-            iconSrc: ""
+            resizeType: "auto"
         }
     },
     methods: {
@@ -99,7 +98,7 @@ export default {
             this.action = "none"
             setTimeout(function() {
                 this.$el.style.display = "none";
-                bus.$emit("closeWindow", this.id);
+                bus.$emit("closeWindow", [this.id, this.zIndex]);
             }.bind(this), 150);
         },
         startDrag: function() {
@@ -197,11 +196,11 @@ export default {
             document.body.style.cursor = "auto";
         },
         bringToFront: function() {
-            bus.$emit("bringToFront", this.id);
+            bus.$emit("bringToFront", [this.id, this.zIndex]);
         }
     },
     created: function() {
-        this.iconSrc = require("../assets/" + this.title.toLowerCase() + ".png");
+        //this.iconSrc = require("../assets/icons/" + this.title.toLowerCase() + ".png");
         if (this.centerAtStart) {
             this.position.current.x = 0.5 * (this.maxWidth - this.size.current.w);
             this.position.current.y = 0.5 * (this.maxHeight - this.size.current.h);
@@ -226,6 +225,7 @@ export default {
     props: {
         id: String,
         title: String,
+        iconSrc: String,
         maxWidth: Number,
         maxHeight: Number,
         zIndex: Number,
