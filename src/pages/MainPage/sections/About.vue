@@ -1,6 +1,12 @@
 <template>
     <div class="about">
+        <img class="about__img">
+        <div class="about__description">
 
+        </div>
+        <div class="about__skills">
+
+        </div>
     </div>
 </template>
 
@@ -16,7 +22,7 @@ export default {
 
     },
     props: {
-        
+        imgSrc: ""
     }
 }
 </script>
@@ -26,6 +32,10 @@ export default {
 @import "../../../styles/_variables.scss";
 
 .about {
+    display: flex;
 
+    &__img {
+
+    }
 }
 </style>

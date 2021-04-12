@@ -67,6 +67,7 @@ export default {
     methods: {
         minimize: function() {
             this.minimized = true;
+            //bus.$emit("minimized");
         },
         toggleMaximized: function() {
             if (this.maximized) {

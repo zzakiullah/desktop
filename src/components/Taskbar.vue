@@ -33,7 +33,7 @@
                        type="text"
                        placeholder="Type here to search">
             </div>-->
-            <button v-for="(tabId, index) in tabIds" :key="tabId" @click="focusWindow(tabId)" class="taskbar__tab">
+            <button v-for="(tabId, index) in tabIds" :key="tabId" @click="handleWindow(tabId)" class="taskbar__tab">
                 <img class="taskbar__tab-icon" :src="tabIconSrcs[index]">
                 <span class="taskbar__tab-title">{{ tabId.replace(/[0-9]/g, "") }}</span>
             </button>
@@ -105,7 +105,7 @@ export default {
             this.tabIds.splice(index, 1);
             this.tabIconSrcs.splice(index, 1);
         },
-        focusWindow: function(tabId) {
+        handleWindow: function(tabId) {
             bus.$emit("focusWindow", tabId);
         }
     },

@@ -1,6 +1,5 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-    faFolder,
     faTimes,
     faTrash,
     faEnvelope,
@@ -15,8 +14,6 @@ import {
     faChevronRight,
     faChevronDown,
     faRocket,
-    faFilePdf,
-    faFileWord,
     faArrowLeft,
     faArrowRight
 } from "@fortawesome/free-solid-svg-icons";
@@ -33,7 +30,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 library.add(
-    faFolder,
     faTimes,
     faTrash,
     faEnvelope,
@@ -48,8 +44,6 @@ library.add(
     faChevronRight,
     faChevronDown,
     faRocket,
-    faFilePdf,
-    faFileWord,
     faArrowLeft,
     faArrowRight,
     faCommentAlt,

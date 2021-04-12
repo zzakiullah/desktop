@@ -12,12 +12,12 @@
                     <div class="grid__column grid__column--half">
                         <shortcut title="About" iconPath="icons/user_folder.png" />
                     </div>
-                    <div class="grid__column grid__column--half">
+                    <!--<div class="grid__column grid__column--half">
                         <shortcut title="Education" iconPath="icons/vectors_folder_badged.png" />
                     </div>
                     <div class="grid__column grid__column--half">
                         <shortcut title="Skills" iconPath="icons/utilities_folder_badged.png" />
-                    </div>
+                    </div>-->
                     <div class="grid__column grid__column--half">
                         <shortcut title="Experience" iconPath="icons/network_folder.png" />
                     </div>
