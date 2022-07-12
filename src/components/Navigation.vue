@@ -45,7 +45,7 @@
 
 <script>
 export default {
-    name: "Navigation",
+    name: "NavigationItem",
     data: function() {
         return {
             current: "",

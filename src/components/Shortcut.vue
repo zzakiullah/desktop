@@ -13,7 +13,7 @@
 import { bus } from "../main";
 
 export default {
-    name: "Shortcut",
+    name: "ShortcutItem",
     data: function() {
         return {
             windowsOpened: 0,

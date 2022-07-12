@@ -65,7 +65,7 @@
 import { bus } from "../main";
 
 export default {
-    name: "Taskbar",
+    name: "TaskbarItem",
     data: function() {
         return {
             tabIds: [],

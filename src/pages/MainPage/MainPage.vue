@@ -4,45 +4,45 @@
             <div class="main-page__content main-page__content--primary">
                 <div class="grid">
                     <div class="grid__column grid__column--half">
-                        <shortcut title="System" iconPath="icons/onyx_hard_drive.png" />
+                        <shortcut-item title="System" iconPath="icons/onyx_hard_drive.png" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Home" iconPath="icons/home_folder.png" />
+                        <shortcut-item title="Home" iconPath="icons/home_folder.png" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="About" iconPath="icons/user_folder.png" />
-                    </div>
-                    <!--<div class="grid__column grid__column--half">
-                        <shortcut title="Education" iconPath="icons/vectors_folder_badged.png" />
-                    </div>
-                    <div class="grid__column grid__column--half">
-                        <shortcut title="Skills" iconPath="icons/utilities_folder_badged.png" />
-                    </div>-->
-                    <div class="grid__column grid__column--half">
-                        <shortcut title="Experience" iconPath="icons/network_folder.png" />
-                    </div>
-                    <div class="grid__column grid__column--half">
-                        <shortcut title="Projects" iconPath="icons/projects_folder_badged.png" />
+                        <shortcut-item title="About" iconPath="icons/user_folder.png" />
                     </div>
                     <!--<div class="grid__column grid__column--half">
-                        <shortcut title="Games" iconPath="icons/games_folder_badged.png" />
-                    </div>-->
-                    <div class="grid__column grid__column--half">
-                        <shortcut title="Contact" iconPath="icons/chats_folder_badged.png" />
+                        <shortcut-item title="Education" iconPath="icons/vectors_folder_badged.png" />
                     </div>
                     <div class="grid__column grid__column--half">
-                        <shortcut title="Resume.pdf" iconPath="icons/pdf.png" href="Resume_2B.pdf" />
+                        <shortcut-item title="Skills" iconPath="icons/utilities_folder_badged.png" />
+                    </div>-->
+                    <div class="grid__column grid__column--half">
+                        <shortcut-item title="Experience" iconPath="icons/network_folder.png" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut-item title="Projects" iconPath="icons/projects_folder_badged.png" />
+                    </div>
+                    <!--<div class="grid__column grid__column--half">
+                        <shortcut-item title="Games" iconPath="icons/games_folder_badged.png" />
+                    </div>-->
+                    <div class="grid__column grid__column--half">
+                        <shortcut-item title="Contact" iconPath="icons/chats_folder_badged.png" />
+                    </div>
+                    <div class="grid__column grid__column--half">
+                        <shortcut-item title="Resume.pdf" iconPath="icons/pdf.png" href="Resume_2B.pdf" />
                     </div>
                 </div>
             </div>
             <div class="main-page__content main-page__content--secondary">
                 <div class="grid">
                     <div class="grid__column">
-                        <shortcut title="Trash" iconPath="icons/trash_full.png" />
+                        <shortcut-item title="Trash" iconPath="icons/trash_full.png" />
                     </div>
                 </div>
             </div>
-            <window v-for="(windowId, index) in windowIds"
+            <window-item v-for="(windowId, index) in windowIds"
                     :key="windowId"
                     :id="windowId"
                     :title="windowId.replace(/[0-9]/g, '')"
@@ -51,10 +51,10 @@
                     :maxWidth="maxWindowWidth"
                     :maxHeight="maxWindowHeight">
                 <!--<component :is="windowId.replace(/[0-9]/g, '')" />-->
-            </window>
+            </window-item>
         </div>
         <div class="main-page__taskbar-wrapper">
-            <taskbar />
+            <taskbar-item />
         </div>
     </div>
 </template>

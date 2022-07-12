@@ -43,7 +43,7 @@
 import { bus } from "../main";
 
 export default {
-    name: "Window",
+    name: "WindowItem",
     data: function() {
         return {
             position: {
